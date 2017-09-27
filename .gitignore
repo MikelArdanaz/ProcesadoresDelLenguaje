@@ -3,3 +3,7 @@
 *._.DS_Store
 *~
 *._*
+scanner.dSYM/
+lex.yy.c
+#Ejecutable
+scanner
