@@ -4,13 +4,12 @@ minuscula [a-z]
 letra {mayuscula}|{minuscula}
 cifra [0-9]
 letra_o_cifra {letra}|{cifra}
-identificador {letra}|{letra_o_cifra}*
-literal_entero (+|−)?{cifra} {cifra}*((e|E){cifra} {cifra}*)?
-literal_real  (+|−)?{cifra} {cifra}*(.{cifra} {cifra}*)?((e|E){cifra} {cifra}*)?
-literal_booleano  verdadero|falso
-literal_caracter  "([^"])*"
-literal_cadena '([^']*|/')*'
-comentario {([^}]*|/})*}
+identificador {letra}{letra_o_cifra}*
+literal_entero (\+|\−)?{cifra}{cifra}*((e|E){cifra}{cifra}*)?
+literal_real  (\+|\−)?{cifra}{cifra}*(\.{cifra}{cifra}*)?((e|E){cifra}{cifra}*)?
+literal_caracter  \".\"
+literal_cadena '([^']*|\/')*'
+comentario \{([^\}]*|\/\})*\}
 dr_accion   accion
 dr_algoritmo   algoritmo
 dr_booleano booleano
@@ -73,12 +72,61 @@ dr_entonces ->
 dr_si_no_si []
 dr_inicio_array   [
 dr_fin_array   ]
+literal_booleano  dr_verdadero|dr_falso
 %%
-{identificador}  {printf("Un identificador %s",yytext);}
-{literal_entero}  {printf("Un literal entero %s",yytext);}
-{dr_mayor}  {printf("Un signo >");}
-{dr_suma}  {printf("Un signo +");}
-{dr_resta}  {printf("Un signo -");}
-{dr_prod}  {printf("Un signo *");}
-{dr_entsal}  {printf("Un e/s");}
+{literal_entero}  {printf("Un literal entero: %s\n",yytext);}
+{literal_real} {printf("Un literal real: %s\n",yytext);}
+{literal_caracter}   {printf("Un literal caracter: %s\n",yytext);}
+{literal_cadena}  {printf("Un literal cadena: %s\n",yytext);}
+{comentario}   {printf("Un comentario: %s\n",yytext);}
+{dr_accion} {printf("Una palabra reservada: %s\n",yytext);}
+{dr_algoritmo} {printf("Una palabra reservada: %s\n",yytext);}
+{dr_booleano}  {printf("Una palabra reservada: %s\n",yytext);}
+{dr_cadena} {printf("Una palabra reservada: %s\n",yytext);}
+{dr_caracter}  {printf("Una palabra reservada: %s\n",yytext);}
+{dr_const}  {printf("Una palabra reservada: %s\n",yytext);}
+{dr_continuar} {printf("Una palabra reservada: %s\n",yytext);}
+{dr_de}  {printf("Una palabra reservada: %s\n",yytext);}
+{dr_dev} {printf("Una palabra reservada: %s\n",yytext);}
+{dr_div} {printf("Una palabra reservada: %s\n",yytext);}
+{dr_ent} {printf("Una palabra reservada: %s\n",yytext);}
+{dr_entero} {printf("Una palabra reservada: %s\n",yytext);}
+{dr_faccion}   {printf("Una palabra reservada: %s\n",yytext);}
+{dr_falgoritmo}   {printf("Una palabra reservada: %s\n",yytext);}
+{literal_booleano}   {printf("Un literal booleano: %s\n",yytext);}
+{dr_fconst} {printf("Una palabra reservada: %s\n",yytext);}
+{dr_ffuncion}  {printf("Una palabra reservada: %s\n",yytext);}
+{dr_fmientras} {printf("Una palabra reservada: %s\n",yytext);}
+{dr_fpara}  {printf("Una palabra reservada: %s\n",yytext);}
+{dr_fsi} {printf("Una palabra reservada: %s\n",yytext);}
+{dr_ftipo}  {printf("Una palabra reservada: %s\n",yytext);}
+{dr_ftupla} {printf("Una palabra reservada: %s\n",yytext);}
+{dr_funcion}   {printf("Una palabra reservada: %s\n",yytext);}
+{dr_fvar}   {printf("Una palabra reservada: %s\n",yytext);}
+{dr_hacer}  {printf("Una palabra reservada: %s\n",yytext);}
+{dr_hasta}  {printf("Una palabra reservada: %s\n",yytext);}
+{dr_mientras}  {printf("Una palabra reservada: %s\n",yytext);}
+{dr_mod} {printf("Una palabra reservada: %s\n",yytext);}
+{dr_no}  {printf("Una palabra reservada: %s\n",yytext);}
+{dr_o}   {printf("Una palabra reservada: %s\n",yytext);}
+{dr_para}   {printf("Una palabra reservada: %s\n",yytext);}
+{dr_real}   {printf("Una palabra reservada: %s\n",yytext);}
+{dr_ref} {printf("Una palabra reservada: %s\n",yytext);}
+{dr_sal} {printf("Una palabra reservada: %s\n",yytext);}
+{dr_si}  {printf("Una palabra reservada: %s\n",yytext);}
+{dr_tabla}  {printf("Una palabra reservada: %s\n",yytext);}
+{dr_tipo}   {printf("Una palabra reservada: %s\n",yytext);}
+{dr_tupla}  {printf("Una palabra reservada: %s\n",yytext);}
+{dr_var} {printf("Una palabra reservada: %s\n",yytext);}
+{dr_y}   {printf("Una palabra reservada: %s\n",yytext);}
+{dr_comparacion}  {printf("Un signo de comparacion: %s\n",yytext);}
+{dr_suma}  {printf("Un signo +\n");}
+{dr_resta}  {printf("Un signo -\n");}
+{dr_prod}  {printf("Un signo *\n");}
+{dr_entsal}  {printf("Un e/s\n");}
+{identificador}   {printf("Un identificador: %s\n",yytext);}
+{dr_falso}  {printf("Una palabra reservada: %s\n",yytext);} /* No se usa nunca por palabra reservada */
+{dr_verdadero} {printf("Una palabra reservada: %s\n",yytext);} /*No se usa nunca por palabra reservada*/
+{dr_asignacion} {printf("Una asignacion: %s\n",yytext);}
+{dr_composicion_secuencial}   {printf("Composicion secuencial: %s\n",yytext);}
 %%
