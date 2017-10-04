@@ -5,7 +5,7 @@ letra {mayuscula}|{minuscula}
 cifra [0-9]
 letra_o_cifra {letra}|{cifra}
 identificador {letra}|{letra_o_cifra}*
-literal_entero  (+|−)?{cifra} {cifra}*((e|E){cifra} {cifra}*)?
+literal_entero (+|−)?{cifra} {cifra}*((e|E){cifra} {cifra}*)?
 literal_real  (+|−)?{cifra} {cifra}*(.{cifra} {cifra}*)?((e|E){cifra} {cifra}*)?
 literal_booleano  verdadero|falso
 literal_caracter  "([^"])*"
@@ -59,17 +59,26 @@ dr_mayor >
 dr_mayor_o_igual  >=
 dr_distinto <>|!=
 dr_igual_comp ==
-dr_igual_asig =
 dr_comparacion {dr_menor}|{dr_menor_o_igual}|{dr_mayor}|{dr_mayor_o_igual}|{dr_distinto}|{dr_igual_comp}
 dr_suma \+
 dr_resta -
 dr_prod  \*
+dr_asignacion  :=
+dr_composicion_secuencial  ;
+dr_separador   ,
+dr_subrango ..
+dr_deftipo  :
+dr_creatipo =
+dr_entonces ->
+dr_si_no_si []
+dr_inicio_array   [
+dr_fin_array   ]
 %%
-{cifra}+    {printf("Una cifra");}
+{identificador}  {printf("Un identificador %s",yytext);}
+{literal_entero}  {printf("Un literal entero %s",yytext);}
 {dr_mayor}  {printf("Un signo >");}
 {dr_suma}  {printf("Un signo +");}
 {dr_resta}  {printf("Un signo -");}
 {dr_prod}  {printf("Un signo *");}
-{identificador}  {printf("Un identificador");}
 {dr_entsal}  {printf("Un e/s");}
 %%
