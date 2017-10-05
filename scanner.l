@@ -60,19 +60,19 @@ dr_distinto <>|!=
 dr_igual_comp ==
 dr_comparacion {dr_menor}|{dr_menor_o_igual}|{dr_mayor}|{dr_mayor_o_igual}|{dr_distinto}|{dr_igual_comp}
 dr_suma \+
-dr_resta -
+dr_resta \-
 dr_prod  \*
 dr_asignacion  :=
 dr_composicion_secuencial  ;
 dr_separador   ,
-dr_subrango ..
+dr_subrango \.\.
 dr_deftipo  :
 dr_creatipo =
-dr_entonces ->
-dr_si_no_si []
-dr_inicio_array   [
-dr_fin_array   ]
-literal_booleano  dr_verdadero|dr_falso
+dr_entonces \->
+dr_si_no_si \[\]
+dr_inicio_array   \[
+dr_fin_array   \]
+literal_booleano  {dr_verdadero}|{dr_falso}
 %%
 {literal_entero}  {printf("Un literal entero: %s\n",yytext);}
 {literal_real} {printf("Un literal real: %s\n",yytext);}
@@ -119,14 +119,28 @@ literal_booleano  dr_verdadero|dr_falso
 {dr_tupla}  {printf("Una palabra reservada: %s\n",yytext);}
 {dr_var} {printf("Una palabra reservada: %s\n",yytext);}
 {dr_y}   {printf("Una palabra reservada: %s\n",yytext);}
+{dr_entonces}  {printf ("Un signo de entonces: %s\n",yytext);}
 {dr_comparacion}  {printf("Un signo de comparacion: %s\n",yytext);}
-{dr_suma}  {printf("Un signo +\n");}
-{dr_resta}  {printf("Un signo -\n");}
-{dr_prod}  {printf("Un signo *\n");}
-{dr_entsal}  {printf("Un e/s\n");}
+{dr_suma}  {printf("Un signo de suma %s\n",yytext);}
+{dr_resta}  {printf("Un signo de resta %s\n",yytext);}
+{dr_prod}  {printf("Un signo de producto %s\n",yytext);}
+{dr_entsal}  {printf("Un signo de entrada salida :%s\n",yytext);}
+{dr_separador} {printf ("Un separador: %s\n",yytext);}
+{dr_subrango}  {printf ("Un signo de subrango: %s\n",yytext);}
+{dr_deftipo}   {printf ("Un signo de definicion de tipo: %s\n",yytext);}
+{dr_creatipo}  {printf ("Un signo de creacion de tipo: %s\n",yytext);}
+{dr_si_no_si}  {printf ("Un signo de si-no-si: %s\n",yytext);}
+{dr_inicio_array} {printf ("Un signo de inicio de array: %s\n",yytext);}
+{dr_fin_array} {printf ("Un signo de fin de array: %s\n",yytext);}
 {identificador}   {printf("Un identificador: %s\n",yytext);}
-{dr_falso}  {printf("Una palabra reservada: %s\n",yytext);} /* No se usa nunca por palabra reservada */
-{dr_verdadero} {printf("Una palabra reservada: %s\n",yytext);} /*No se usa nunca por palabra reservada*/
 {dr_asignacion} {printf("Una asignacion: %s\n",yytext);}
 {dr_composicion_secuencial}   {printf("Composicion secuencial: %s\n",yytext);}
 %%
+int main( int argc, char **argv ){
+   ++argv, --argc;  /* skip over program name */
+   if ( argc > 0 )
+      yyin = fopen( argv[0], "r" );
+   else
+      yyin = stdin;
+   yylex();
+}

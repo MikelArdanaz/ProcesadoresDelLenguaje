@@ -1,10 +1,8 @@
-Cuantos tokens para el ejemplo???
-
 MAYUSCULAS minusculas Letras Letr4 Id3nt1f1c4d0r
 0 0123 +0123 -0123e2 10E2 10e10 +12E34
 -12.05E34
 verdadero falso
-"a" "/""
+"a"
 'asdf/'asdf'
 {hola} {hola/}adios}
 accion
@@ -19,7 +17,7 @@ dev
 div
 ent
 entero
-e\/s
+e/s
 faccion
 falgoritmo
 falso
@@ -50,5 +48,6 @@ var
 verdadero
 y
 < <= > >= <> != ==
-
-
+: .. ; , := -> =
+[ ] [] [[]]
++ - *
