@@ -136,11 +136,3 @@ literal_booleano  {dr_verdadero}|{dr_falso}
 {dr_asignacion} {printf("Una asignacion: %s\n",yytext);return (ASIG);}
 {dr_composicion_secuencial}   {printf("Composicion secuencial: %s\n",yytext);return (SECU);}
 %%
-int main( int argc, char **argv ){
-   ++argv, --argc;  /* skip over program name */
-   if ( argc > 0 )
-      yyin = fopen( argv[0], "r" );
-   else
-      yyin = stdin;
-   yylex();
-}

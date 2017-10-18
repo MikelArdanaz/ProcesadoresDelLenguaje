@@ -5,6 +5,7 @@
 //-- Lexer prototype required by bison, aka getNextToken()
 int yylex();
 int yyerror(const char *p) { cerr << "Error!" << endl; }
+extern FILE* yyin;
 %}
 
 //-- SYMBOL SEMANTIC VALUES -----------------------------
@@ -80,8 +81,11 @@ int yyerror(const char *p) { cerr << "Error!" << endl; }
 
 %%
 //-- FUNCTION DEFINITIONS ---------------------------------
-int main()
-{
-  yyparse();
-  return 0;
+int main( int argc, char **argv ){
+   ++argv, --argc;  /* skip over program name */
+   if ( argc > 0 )
+      yyin = fopen( argv[0], "r" );
+   else
+      yyin = stdin;
+   yyparse();
 }
