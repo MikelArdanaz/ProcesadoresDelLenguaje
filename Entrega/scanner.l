@@ -73,6 +73,8 @@ dr_si_no_si \[\]
 dr_inicio_array   \[
 dr_fin_array   \]
 literal_booleano  {dr_verdadero}|{dr_falso}
+dr_tipobase {dr_booleano}|{dr_entero}|{dr_caracter}|{dr_cadena}|{dr_real}
+dr_punto \.
 %%
 {literal_entero}  {printf("Un literal entero: %s\n",yytext);return (LENT);}
 {literal_real} {printf("Un literal real: %s\n",yytext);return (LREA);}
@@ -81,16 +83,13 @@ literal_booleano  {dr_verdadero}|{dr_falso}
 {comentario}   {printf("Un comentario: %s\n",yytext);return (COME);}
 {dr_accion} {printf("Una palabra reservada: %s\n",yytext);return (ACCI);}
 {dr_algoritmo} {printf("Una palabra reservada: %s\n",yytext);return (ALGO);}
-{dr_booleano}  {printf("Una palabra reservada: %s\n",yytext);return (BOOL);}
-{dr_cadena} {printf("Una palabra reservada: %s\n",yytext);return (CADE);}
-{dr_caracter}  {printf("Una palabra reservada: %s\n",yytext);return (CARA);}
+{dr_tipobase}  {printf("Una palabra reservada: %s\n",yytext);return (BASE);}
 {dr_const}  {printf("Una palabra reservada: %s\n",yytext);return (CONS);}
 {dr_continuar} {printf("Una palabra reservada: %s\n",yytext);return (CONT);}
 {dr_de}  {printf("Una palabra reservada: %s\n",yytext);return (DRDE);}
 {dr_dev} {printf("Una palabra reservada: %s\n",yytext);return (DDEV);}
 {dr_div} {printf("Una palabra reservada: %s\n",yytext);return (DDIV);}
 {dr_ent} {printf("Una palabra reservada: %s\n",yytext);return (ENTR);}
-{dr_entero} {printf("Una palabra reservada: %s\n",yytext);return (ENTE);}
 {dr_faccion}   {printf("Una palabra reservada: %s\n",yytext);return (FACC);}
 {dr_falgoritmo}   {printf("Una palabra reservada: %s\n",yytext);return (FALG);}
 {literal_booleano}   {printf("Un literal booleano: %s\n",yytext);return (LBOO);}
@@ -110,7 +109,6 @@ literal_booleano  {dr_verdadero}|{dr_falso}
 {dr_no}  {printf("Una palabra reservada: %s\n",yytext);return (DRNO);}
 {dr_o}   {printf("Una palabra reservada: %s\n",yytext);return (DROR);}
 {dr_para}   {printf("Una palabra reservada: %s\n",yytext);return (PARA);}
-{dr_real}   {printf("Una palabra reservada: %s\n",yytext);return (REAL);}
 {dr_ref} {printf("Una palabra reservada: %s\n",yytext);return (DREF);}
 {dr_sal} {printf("Una palabra reservada: %s\n",yytext);return (DSAL);}
 {dr_si}  {printf("Una palabra reservada: %s\n",yytext);return (DRSI);}
@@ -135,4 +133,5 @@ literal_booleano  {dr_verdadero}|{dr_falso}
 {identificador}   {printf("Un identificador: %s\n",yytext);return (IDEN);}
 {dr_asignacion} {printf("Una asignacion: %s\n",yytext);return (ASIG);}
 {dr_composicion_secuencial}   {printf("Composicion secuencial: %s\n",yytext);return (SECU);}
+{dr_punto}   {printf("Composicion secuencial: %s\n",yytext);return (PUNT);}
 %%
