@@ -195,6 +195,7 @@ exp_b             : exp_b DAND exp_b {}
                   ;
 
 exp_b             : expresion COMP expresion {}
+                  | expresion CREA expresion {}
                   | APER exp_b CIER  {}
                   ;
 
@@ -204,7 +205,67 @@ operando          : IDEN   {}
                   | operando DREF   {}
                   ;
 
+instrucciones     : instruccion SECU instrucciones {}
+                  | instruccion  {}
+                  ;
 
+instruccion       : CONT   {}
+                  | asignacion   {}
+                  | alternativa  {}
+                  | iteracion {}
+                  | accion_ll {}
+                  ;
+
+asignacion        : operando ASIG expresion  {}
+                  ;
+
+alternativa       : DRSI expresion ENTO instrucciones lista_opciones DFSI  {}
+                  ;
+
+lista_opciones    : INAR FINA expresion ENTO instrucciones lista_opciones   {}
+                  | /*epsilon*/  {}
+                  ;
+
+iteracion         : it_cota_fija {}
+                  | it_cota_exp  {}
+                  ;
+
+it_cota_exp       : MIEN expresion HACE instrucciones FMIE  {}
+                  ;
+
+it_cota_fija      : PARA IDEN ASIG expresion HAST expresion HACE instrucciones FPAR {}
+                  ;
+
+accion_d          : ACCI a_cabecera bloque FACC {}
+                  ;
+
+funcion_d         : FUNC f_cabecera bloque DDEV expresion FFUN {}
+                  ;
+
+a_cabecera        : IDEN APER d_par_form CIER SECU  {}
+                  ;
+
+f_cabecera        : IDEN APER lista_d_var CIER DDEV d_tipo SECU   {}
+                  ;
+
+d_par_form        : d_p_form SECU d_par_form {}
+                  | /*epsilon*/
+                  ;
+
+d_p_form          : ENTR lista_id DEFT d_tipo   {}
+                  | DSAL lista_id DEFT d_tipo   {}
+                  | ENSA lista_id DEFT d_tipo   {}
+                  ;
+
+accion_ll         : IDEN APER l_ll CIER   {}
+                  ;
+
+funcion_ll        : IDEN APER l_ll CIER   {}
+                  ;
+
+l_ll              : expresion SEPA l_ll   {}
+                  | expresion {}
+                  ;
 %%
 //-- FUNCTION DEFINITIONS ---------------------------------
 int main( int argc, char **argv ){
