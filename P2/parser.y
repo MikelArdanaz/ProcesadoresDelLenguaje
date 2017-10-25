@@ -196,7 +196,7 @@ exp_b             : exp_b DAND exp_b {printf("exp_b_AND \n");}
 
 exp_b             : expresion COMP expresion {printf("exp_b_COMP \n");}
                   | expresion CREA expresion {printf("exp_b_CREA \n");}
-                  | APER exp_b CIER  {printf("exp_b_(exp_b) \n}
+                  | APER exp_b CIER  {printf("exp_b_(exp_b) \n");}
                   ;
 
 operando          : IDEN   {printf("operando_1 \n");}

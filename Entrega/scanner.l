@@ -57,8 +57,7 @@ dr_menor_o_igual  <=
 dr_mayor >
 dr_mayor_o_igual  >=
 dr_distinto <>|!=
-dr_igual_comp ==
-dr_comparacion {dr_menor}|{dr_menor_o_igual}|{dr_mayor}|{dr_mayor_o_igual}|{dr_distinto}|{dr_igual_comp}
+dr_comparacion {dr_menor}|{dr_menor_o_igual}|{dr_mayor}|{dr_mayor_o_igual}|{dr_distinto}
 dr_suma \+
 dr_resta \-
 dr_prod  \*
