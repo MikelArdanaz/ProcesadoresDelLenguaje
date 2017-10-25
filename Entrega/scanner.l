@@ -62,6 +62,9 @@ dr_comparacion {dr_menor}|{dr_menor_o_igual}|{dr_mayor}|{dr_mayor_o_igual}|{dr_d
 dr_suma \+
 dr_resta \-
 dr_prod  \*
+dr_division \/
+dr_apertura \(
+dr_cierre   \)
 dr_asignacion  :=
 dr_composicion_secuencial  ;
 dr_separador   ,
@@ -122,6 +125,7 @@ dr_punto \.
 {dr_suma}  {printf("Un signo de suma %s\n",yytext);return (SUMA);}
 {dr_resta}  {printf("Un signo de resta %s\n",yytext);return (REST);}
 {dr_prod}  {printf("Un signo de producto %s\n",yytext);return (PROD);}
+{dr_division}  {printf("Un signo de division %s\n",yytext);return (DIVI);}
 {dr_entsal}  {printf("Un signo de entrada salida :%s\n",yytext);return (ENSA);}
 {dr_separador} {printf ("Un separador: %s\n",yytext);return (SEPA);}
 {dr_subrango}  {printf ("Un signo de subrango: %s\n",yytext);return (SUBR);}
@@ -130,6 +134,8 @@ dr_punto \.
 {dr_si_no_si}  {printf ("Un signo de si-no-si: %s\n",yytext);return (SINO);}
 {dr_inicio_array} {printf ("Un signo de inicio de array: %s\n",yytext);return (INAR);}
 {dr_fin_array} {printf ("Un signo de fin de array: %s\n",yytext);return (FINA);}
+{dr_apertura} {printf ("Un signo de apertura de parentesis: %s\n",yytext);return (APER);}
+{dr_cierre} {printf ("Un signo de cierre de parentesis: %s\n",yytext);return (CIER);}
 {identificador}   {printf("Un identificador: %s\n",yytext);return (IDEN);}
 {dr_asignacion} {printf("Una asignacion: %s\n",yytext);return (ASIG);}
 {dr_composicion_secuencial}   {printf("Composicion secuencial: %s\n",yytext);return (SECU);}

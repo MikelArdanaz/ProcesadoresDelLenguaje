@@ -73,24 +73,137 @@ extern FILE* yyin;
 %token   ASIG
 %token   SECU
 %token   PUNT
+%token   APER
+%token   CIER
+%token   DIVI
 
 //-- GRAMMAR RULES ---------------------------------------
 %%
-desc_algoritmo: ALGO IDEN SECU cabecera_alg bloque_alg FALG PUNT
-cabecera_alg: decl_globales decl_a_f decl_ent_sal COME
-bloque_alg: bloque COME
-decl_globales: declaracion_tipo decl_globales|declaracion_const decl_globales|/*epsilon*/
-decl_a_f: accion_d decl_a_f|funcion_f decl_a_f|/*epsilon*/
-bloque: declaraciones|instrucciones
-declaraciones: declaracion_tipo declaraciones | declaracion_const declaraciones| declaracion_var declaraciones| /*epsilon*/
-declaracion_tipo: TIPO lista_d_tipo FTIP SECU
-declaracion_const: CONS lista_d_cte FCON SECU
-declaracion_var: DVAR lista_d_var FVAR SECU
-lista_d_tipo: IDEN CREA d_tipo SECU lista_d_tipo| /*epsilon*/
-d_tipo: TUPL lista_campos FTUP| TABL INAR expresion_t SUBR expresion_t FINA DRDE d_tipo
-d_tipo: IDEN| expresion_t SUBR expresion_t| DREF d_tipo | BASE
-expresion_t: expresion| LCAR
-lista_campos: IDEN DEFT d_tipo SECU lista_campos| /*epsilon*/
+desc_algoritmo : ALGO IDEN SECU cabecera_alg bloque_alg FALG PUNT {}
+               ;
+
+cabecera_alg   : decl_globales decl_a_f decl_ent_sal COME {}
+               ;
+
+bloque_alg     : bloque COME {}
+               ;
+
+decl_globales  : declaracion_tipo decl_globales {}
+               | declaracion_const decl_globales {}
+               | /*epsilon*/ {}
+               ;
+
+decl_a_f: accion_d decl_a_f   {}
+         | funcion_f decl_a_f  {}
+         | /*epsilon*/   {}
+         ;
+
+bloque:  declaraciones {}
+      | instrucciones {}
+      ;
+
+declaraciones  : declaracion_tipo declaraciones {}
+               | declaracion_const declaraciones   {}
+               | declaracion_var declaraciones  {}
+               | /*epsilon*/  {}
+               ;
+
+declaracion_tipo  : TIPO lista_d_tipo FTIP SECU {}
+                  ;
+
+declaracion_const : CONS lista_d_cte FCON SECU  {}
+                  ;
+
+declaracion_var   : DVAR lista_d_var FVAR SECU  {}
+                  ;
+
+lista_d_tipo      : IDEN CREA d_tipo SECU lista_d_tipo   {}
+                  | /*epsilon*/  {}
+                  ;
+
+d_tipo            : TUPL lista_campos FTUP   {}
+                  | TABL INAR expresion_t SUBR expresion_t FINA DRDE d_tipo   {}
+                  ;
+
+d_tipo            : IDEN   {}
+                  | expresion_t SUBR expresion_t   {}
+                  | DREF d_tipo  {}
+                  | BASE   {}
+                  ;
+
+expresion_t       : expresion {}
+                  | LCAR   {}
+                  ;
+
+lista_campos      : IDEN DEFT d_tipo SECU lista_campos   {}
+                  | /*epsilon*/  {}
+                  ;
+
+lista_d_cte       : IDEN CREA LENT SECU lista_d_cte   {} /*TODO Agrupar literales en 1 token*/
+                  | IDEN CREA LREA SECU lista_d_cte {}
+                  | IDEN CREA LCAR SECU lista_d_cte {}
+                  | IDEN CREA LCAD SECU lista_d_cte {}
+                  | IDEN CREA LBOO SECU lista_d_cte {}
+                  | /*epsilon*/   {}
+                  ;
+
+lista_d_var       : lista_id DEFT IDEN SECU lista_d_var  {}
+                  | lista_id DEFT d_tipo SECU lista_d_var {}
+                  | /*epsilon*/   {}
+                  ;
+
+lista_id          : IDEN SEPA lista_id  {}
+                  | IDEN   {}
+                  ;
+
+decl_ent_sal      : decl_ent  {}
+                  | decl_ent decl_sal   {}
+                  | decl_sal   {}
+                  ;
+
+decl_ent          : ENTR lista_d_var
+                  ;
+
+decl_sal          : DSAL lista_d_var
+                  ;
+
+expresion         : exp_a  {}
+                  | exp_b   {}
+                  | funcion_ll {}
+                  ;
+
+exp_a             : exp_a SUMA exp_a   {}
+                  | exp_a REST exp_a   {}
+                  | exp_a PROD exp_a   {}
+                  | exp_a DIVI exp_a   {}
+                  | exp_a DMOD exp_a   {}
+                  ;
+
+exp_a             : exp_a DDIV exp_a   {}
+                  | APER exp_a CIER  {}
+                  | operando   {}
+                  | literal_entero   {}
+                  | literal_real  {}
+                  | REST exp_a {}
+                  ;
+
+exp_b             : exp_b DAND exp_b {}
+                  | exp_b DROR exp_b {}
+                  | DRNO exp_b {}
+                  | operando {}
+                  | LBOO   {}
+                  ;
+
+exp_b             : expresion COMP expresion {}
+                  | APER exp_b CIER  {}
+                  ;
+
+operando          : IDEN   {}
+                  | operando PUNT operando   {}
+                  | operando INAR expresion FINA {}
+                  | operando DREF   {}
+                  ;
+
 
 %%
 //-- FUNCTION DEFINITIONS ---------------------------------

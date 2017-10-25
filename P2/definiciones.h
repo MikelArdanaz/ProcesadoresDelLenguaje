@@ -59,4 +59,7 @@
 #define ASIG 70
 #define SECU 71
 #define PUNT 72
+#define APER 73
+#define CIER 74
+#define DIVI 75
 #endif
