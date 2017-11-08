@@ -139,7 +139,7 @@ lista_campos      : IDEN DEFT d_tipo SECU lista_campos   {printf("lista_campos \
                   | /*epsilon*/  {printf("lista_campos_epsilon \n");}
                   ;
 
-lista_d_cte       : IDEN CREA LENT SECU lista_d_cte   {printf("lista_d_cte_entera \n");} /*TODO Agrupar literales en 1 token*/
+lista_d_cte       : IDEN CREA LENT SECU lista_d_cte {printf("lista_d_cte_entera \n");} /*TODO Agrupar literales en 1 token*/
                   | IDEN CREA LREA SECU lista_d_cte {printf("lista_d_cte_real \n");}
                   | IDEN CREA LCAR SECU lista_d_cte {printf("lista_d_cte_caracter \n");}
                   | IDEN CREA LCAD SECU lista_d_cte {printf("lista_d_cte_cadena \n");}
@@ -205,66 +205,66 @@ operando          : IDEN   {printf("operando_1 \n");}
                   | operando DREF   {printf("operando_4 \n");}
                   ;
 
-instrucciones     : instruccion SECU instrucciones {}
-                  | instruccion  {}
+instrucciones     : instruccion SECU instrucciones {printf("instrucciones_1 \n");}
+                  | instruccion  {printf("instrucciones_2 \n");}
                   ;
 
-instruccion       : CONT   {}
-                  | asignacion   {}
-                  | alternativa  {}
-                  | iteracion {}
-                  | accion_ll {}
+instruccion       : CONT   {printf("instruccion_1 \n");}
+                  | asignacion   {printf("instruccion_2 \n");}
+                  | alternativa  {printf("instruccion_3 \n");}
+                  | iteracion {printf("instruccion_4 \n");}
+                  | accion_ll {printf("instruccion_5 \n");}
                   ;
 
-asignacion        : operando ASIG expresion  {}
+asignacion        : operando ASIG expresion  {printf("asignacion \n");}
                   ;
 
-alternativa       : DRSI expresion ENTO instrucciones lista_opciones DFSI  {}
+alternativa       : DRSI expresion ENTO instrucciones lista_opciones DFSI  {printf("alternativa \n");}
                   ;
 
-lista_opciones    : INAR FINA expresion ENTO instrucciones lista_opciones   {}
-                  | /*epsilon*/  {}
+lista_opciones    : INAR FINA expresion ENTO instrucciones lista_opciones   {printf("lista_opciones_1 \n");}
+                  | /*epsilon*/  {printf("lista_opciones_epsilon \n");}
                   ;
 
-iteracion         : it_cota_fija {}
-                  | it_cota_exp  {}
+iteracion         : it_cota_fija {printf("iteracion_1 \n");}
+                  | it_cota_exp  {printf("iteracion_2 \n");}
                   ;
 
-it_cota_exp       : MIEN expresion HACE instrucciones FMIE  {}
+it_cota_exp       : MIEN expresion HACE instrucciones FMIE  {printf("it_cota_exp \n");}
                   ;
 
-it_cota_fija      : PARA IDEN ASIG expresion HAST expresion HACE instrucciones FPAR {}
+it_cota_fija      : PARA IDEN ASIG expresion HAST expresion HACE instrucciones FPAR {printf("it_cota_fija \n");}
                   ;
 
-accion_d          : ACCI a_cabecera bloque FACC {}
+accion_d          : ACCI a_cabecera bloque FACC {printf("accion_d \n");}
                   ;
 
-funcion_d         : FUNC f_cabecera bloque DDEV expresion FFUN {}
+funcion_d         : FUNC f_cabecera bloque DDEV expresion FFUN {printf("funcion_d \n");}
                   ;
 
-a_cabecera        : IDEN APER d_par_form CIER SECU  {}
+a_cabecera        : IDEN APER d_par_form CIER SECU  {printf("a_cabecera \n");}
                   ;
 
-f_cabecera        : IDEN APER lista_d_var CIER DDEV d_tipo SECU   {}
+f_cabecera        : IDEN APER lista_d_var CIER DDEV d_tipo SECU   {printf("f_cabecera \n");}
                   ;
 
-d_par_form        : d_p_form SECU d_par_form {}
-                  | /*epsilon*/
+d_par_form        : d_p_form SECU d_par_form {printf("d_par_form_1 \n");}
+                  | /*epsilon*/  {printf("d_par_form_epsilon \n");}
                   ;
 
-d_p_form          : ENTR lista_id DEFT d_tipo   {}
-                  | DSAL lista_id DEFT d_tipo   {}
-                  | ENSA lista_id DEFT d_tipo   {}
+d_p_form          : ENTR lista_id DEFT d_tipo   {printf("d_p_form_1 \n");}
+                  | DSAL lista_id DEFT d_tipo   {printf("d_p_form_2 \n");}
+                  | ENSA lista_id DEFT d_tipo   {printf("d_p_form_3 \n");}
                   ;
 
-accion_ll         : IDEN APER l_ll CIER   {}
+accion_ll         : IDEN APER l_ll CIER   {printf("accion_ll \n");}
                   ;
 
-funcion_ll        : IDEN APER l_ll CIER   {}
+funcion_ll        : IDEN APER l_ll CIER   {printf("funcion_ll \n");}
                   ;
 
-l_ll              : expresion SEPA l_ll   {}
-                  | expresion {}
+l_ll              : expresion SEPA l_ll   {printf("l_ll_1 \n");}
+                  | expresion {printf("l_ll_2 \n");}
                   ;
 %%
 //-- FUNCTION DEFINITIONS ---------------------------------
