@@ -94,7 +94,7 @@ decl_globales  : declaracion_tipo decl_globales {printf("decl_globales_1 \n");}
                ;
 
 decl_a_f: accion_d decl_a_f   {printf("decl_a_f_1 \n");}
-         | funcion_f decl_a_f  {printf("decl_a_f_2 \n");}
+         | funcion_d decl_a_f  {printf("decl_a_f_2 \n");}
          | /*epsilon*/   {printf("decl_a_f_epsilon \n");}
          ;
 
@@ -182,8 +182,8 @@ exp_a             : exp_a SUMA exp_a   {printf("exp_a_suma \n");}
 exp_a             : exp_a DDIV exp_a   {printf("exp_a_div \n");}
                   | APER exp_a CIER  {printf("exp_a_(exp_a) \n");}
                   | operando   {printf("exp_a_operando \n");}
-                  | literal_entero   {printf("exp_a_entero \n");}
-                  | literal_real  {printf("exp_a_real \n");}
+                  | LENT   {printf("exp_a_entero \n");}
+                  | LREA  {printf("exp_a_real \n");}
                   | REST exp_a {printf("exp_a_-exp_a \n");}
                   ;
 
