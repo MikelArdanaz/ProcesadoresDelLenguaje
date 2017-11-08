@@ -3,8 +3,9 @@
  ********************************************************/
 %{
 //-- Lexer prototype required by bison, aka getNextToken()
+#include <stdio.h>
 int yylex();
-int yyerror(const char *p) { cerr << "Error!" << endl; }
+void yyerror(const char* s);
 extern FILE* yyin;
 %}
 
@@ -70,6 +71,7 @@ extern FILE* yyin;
 %token   INAR
 %token   FINA
 %token   IDEN
+%token   IBOO
 %token   ASIG
 %token   SECU
 %token   PUNT
@@ -190,8 +192,7 @@ exp_a             : exp_a DDIV exp_a   {printf("exp_a_div \n");}
 exp_b             : exp_b DAND exp_b {printf("exp_b_AND \n");}
                   | exp_b DROR exp_b {printf("exp_b_OR \n");}
                   | DRNO exp_b {printf("exp_b_NO \n");}
-                  | operando {printf("exp_b_operando \n");}
-                  | LBOO   {printf("exp_b_litBooleano \n");}
+                  | operandob   {printf("exp_b_litBooleano \n");}
                   ;
 
 exp_b             : expresion COMP expresion {printf("exp_b_COMP \n");}
@@ -203,6 +204,9 @@ operando          : IDEN   {printf("operando_1 \n");}
                   | operando PUNT operando   {printf("operando_2 \n");}
                   | operando INAR expresion FINA {printf("operando_3 \n");}
                   | operando DREF   {printf("operando_4 \n");}
+                  ;
+
+operandob         : IBOO   {printf("operando booleano \n");}
                   ;
 
 instrucciones     : instruccion SECU instrucciones {printf("instrucciones_1 \n");}
@@ -275,4 +279,7 @@ int main( int argc, char **argv ){
    else
       yyin = stdin;
    yyparse();
+}
+void yyerror(const char* s){
+   fprintf(stderr,"Parse error: %s\n", s);
 }

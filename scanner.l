@@ -1,3 +1,6 @@
+%{
+#include "parser.tab.h"
+%}
 /* Practica 1 Procesadores del lenguaje */
 mayuscula [A-Z]
 minuscula [a-z]
@@ -5,6 +8,7 @@ letra {mayuscula}|{minuscula}
 cifra [0-9]
 letra_o_cifra {letra}|{cifra}
 identificador {letra}{letra_o_cifra}*
+identificador_booleano B{letra_o_cifra}*
 literal_entero (\+|\−)?{cifra}{cifra}*((e|E){cifra}{cifra}*)?
 literal_real  (\+|\−)?{cifra}{cifra}*(\.{cifra}{cifra}*)?((e|E){cifra}{cifra}*)?
 literal_caracter  \".\"
@@ -135,6 +139,7 @@ dr_punto \.
 {dr_fin_array} {printf ("Un signo de fin de array: %s\n",yytext);return FINA;}
 {dr_apertura} {printf ("Un signo de apertura de parentesis: %s\n",yytext);return APER;}
 {dr_cierre} {printf ("Un signo de cierre de parentesis: %s\n",yytext);return CIER;}
+{identificador_booleano}   {printf("Un identificador booleano: %s\n",yytext);return IBOO;}
 {identificador}   {printf("Un identificador: %s\n",yytext);return IDEN;}
 {dr_asignacion} {printf("Una asignacion: %s\n",yytext);return ASIG;}
 {dr_composicion_secuencial}   {printf("Composicion secuencial: %s\n",yytext);return SECU;}

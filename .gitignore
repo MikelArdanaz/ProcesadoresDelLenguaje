@@ -6,6 +6,7 @@
 #Autogenerados en compilacion
 scanner.dSYM/
 lex.yy.c
+lex.yy.o
 parser.output
 parser.tab.c
 parser.tab.h

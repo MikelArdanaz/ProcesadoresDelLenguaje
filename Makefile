@@ -6,7 +6,7 @@ else
 	LFL = -lfl
 endif
 
-CC       = gcc -g
+CC       = gcc -c
 LEX      = flex -i -ll -I
 YACC     = bison -d -y
 all: parser scanner
