@@ -7,8 +7,8 @@ minuscula [a-z]
 letra {mayuscula}|{minuscula}
 cifra [0-9]
 letra_o_cifra {letra}|{cifra}
-identificador {letra}{letra_o_cifra}*
 identificador_booleano B{letra_o_cifra}*
+identificador {letra}{letra_o_cifra}*
 literal_entero (\+|\−)?{cifra}{cifra}*((e|E){cifra}{cifra}*)?
 literal_real  (\+|\−)?{cifra}{cifra}*(\.{cifra}{cifra}*)?((e|E){cifra}{cifra}*)?
 literal_caracter  \".\"

@@ -145,11 +145,12 @@ lista_d_cte       : IDEN CREA LENT SECU lista_d_cte {printf("lista_d_cte_entera 
                   | IDEN CREA LREA SECU lista_d_cte {printf("lista_d_cte_real \n");}
                   | IDEN CREA LCAR SECU lista_d_cte {printf("lista_d_cte_caracter \n");}
                   | IDEN CREA LCAD SECU lista_d_cte {printf("lista_d_cte_cadena \n");}
-                  | IDEN CREA LBOO SECU lista_d_cte {printf("lista_d_cte_booleano \n");}
+                  | IBOO CREA LBOO SECU lista_d_cte {printf("lista_d_cte_booleano \n");}
                   | /*epsilon*/   {printf("lista_d_cte_epsilon \n");}
                   ;
 
 lista_d_var       : lista_id DEFT IDEN SECU lista_d_var  {printf("lista_d_var_1 \n");}
+                  | lista_id DEFT IBOO SECU lista_d_var  {printf("lista_d_var_booleano \n");}
                   | lista_id DEFT d_tipo SECU lista_d_var {printf("lista_d_var_2 \n");}
                   | /*epsilon*/   {printf("lista_d_var_epsilon \n");}
                   ;
@@ -237,7 +238,8 @@ iteracion         : it_cota_fija {printf("iteracion_1 \n");}
 it_cota_exp       : MIEN expresion HACE instrucciones FMIE  {printf("it_cota_exp \n");}
                   ;
 
-it_cota_fija      : PARA IDEN ASIG expresion HAST expresion HACE instrucciones FPAR {printf("it_cota_fija \n");}
+it_cota_fija      : PARA IDEN ASIG expresion HAST expresion HACE instrucciones FPAR {printf("it_cota_fija \n");
+                  |PARA IBOO ASIG expresion HAST expresion HACE instrucciones FPAR {printf("it_cota_fija \n");}
                   ;
 
 accion_d          : ACCI a_cabecera bloque FACC {printf("accion_d \n");}
