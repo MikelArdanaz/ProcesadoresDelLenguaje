@@ -1,10 +1,12 @@
 algoritmo intercambio;
-    ent a, b: entero;
-    sal a, b: entero;
-{Prec: a= A AND b = B} var
-        aux: entero;
-    fvar
-    aux:= a;
-    a:= b;
-    b:= aux
-{Post: b=A AND a = B} falgoritmo
+    ent a, c: entero;
+    sal a, c: entero;
+{Prec: a= A AND c = C}
+   var
+      aux: entero;
+   fvar
+   aux:= a;
+   a:= c;
+   c:= aux;
+{Post: c=A AND a = C}
+falgoritmo

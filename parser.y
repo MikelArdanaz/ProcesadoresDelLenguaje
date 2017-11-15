@@ -116,7 +116,7 @@ declaracion_tipo  : TIPO lista_d_tipo FTIP SECU {printf("declaracion_tipo \n");}
 declaracion_const : CONS lista_d_cte FCON SECU  {printf("declaracion_const \n");}
                   ;
 
-declaracion_var   : DVAR lista_d_var FVAR SECU  {printf("declaracion_var \n");}
+declaracion_var   : DVAR lista_d_var FVAR    {printf("declaracion_var \n");}
                   ;
 
 lista_d_tipo      : IDEN CREA d_tipo SECU lista_d_tipo   {printf("d_lista_tipo \n");}
