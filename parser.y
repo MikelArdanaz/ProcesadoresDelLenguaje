@@ -238,7 +238,7 @@ iteracion         : it_cota_fija {printf("iteracion_1 \n");}
 it_cota_exp       : MIEN expresion HACE instrucciones FMIE  {printf("it_cota_exp \n");}
                   ;
 
-it_cota_fija      : PARA IDEN ASIG expresion HAST expresion HACE instrucciones FPAR {printf("it_cota_fija \n");
+it_cota_fija      : PARA IDEN ASIG expresion HAST expresion HACE instrucciones FPAR {printf("it_cota_fija \n");}
                   |PARA IBOO ASIG expresion HAST expresion HACE instrucciones FPAR {printf("it_cota_fija \n");}
                   ;
 

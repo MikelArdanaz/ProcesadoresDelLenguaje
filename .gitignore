@@ -10,7 +10,8 @@ lex.yy.o
 parser.output
 parser.tab.c
 parser.tab.h
+parser.tab.o
 #Ejecutable
-scanner
+compilador
 #Entregas
 entrega.tar.gz
