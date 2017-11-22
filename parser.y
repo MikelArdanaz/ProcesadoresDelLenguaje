@@ -227,7 +227,7 @@ asignacion        : operando ASIG expresion  {printf("asignacion \n");}
 alternativa       : DRSI expresion ENTO instrucciones lista_opciones DFSI  {printf("alternativa \n");}
                   ;
 
-lista_opciones    : INAR FINA expresion ENTO instrucciones lista_opciones   {printf("lista_opciones_1 \n");}
+lista_opciones    : SINO expresion ENTO instrucciones lista_opciones   {printf("lista_opciones_1 \n");}
                   | /*epsilon*/  {printf("lista_opciones_epsilon \n");}
                   ;
 
