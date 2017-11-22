@@ -1,0 +1,19 @@
+construir tabla de simbolos.c, acompañado de tabla de simbolos.h que tiene la declaracion de tipo y todas las funcionalidades de .c
+
+lo mismo con la tabla de cuadruplas
+
+en el .y estaran las rutinas que usa la tabla de simbolos, asi que arriba haces el include de las tablas de simbolos
+
+se genera un error: alguno de los tipos dentro del union, bison los exporta atraves de .tab.h.
+			en el .l, hacer antes que nada un include de la tabla de simbolos
+
+
+despues, compilar todos los.c con gcc -c
+en el makefile, dcc tabc RS-o TC.o .... -lfl
+
+
+en tablas de simbolos y cuadruplas: DE MOMENTO SOLO el tipo y la operacion constructora (y la operacion gen en la de cuadruplas)
+despues de esto comenzar con la generacion de codigo para la declaracion de variables: veremos que necesitamos y que nos viene bien hacer primero
+
+
+declaracion de variables: mejor empezar por las de arriba (comunicacion con el entorno -> entsal)
