@@ -5,13 +5,13 @@ ifeq ($(OS),Darwin)
 else
 	LFL = -lfl
 endif
-CC       = gcc -c
+CC       = gcc -o
 LEX      = flex -i -I
-YACC     = bison -d -y
+YACC     = bison -d -v
 all: compilador
 parser: parser.y
-	bison -d -v parser.y
+	$(YACC) parser.y
 scanner: scanner.l
 	$(LEX) scanner.l
 compilador: parser scanner
-	gcc -o compilador parser.tab.c lex.yy.c $(LFL) 
+	$(CC) compilador parser.tab.c lex.yy.c $(LFL)

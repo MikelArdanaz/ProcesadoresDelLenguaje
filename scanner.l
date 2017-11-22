@@ -1,5 +1,6 @@
 %{
 #include "parser.tab.h"
+#include "ts.h"
 %}
 /* Practica 1 Procesadores del lenguaje */
 mayuscula [A-Z]
@@ -132,6 +133,7 @@ dr_punto \.
 {dr_entsal}  {printf("Un signo de entrada salida :%s\n",yytext);return ENSA;}
 {dr_separador} {printf ("Un separador: %s\n",yytext);return SEPA;}
 {dr_subrango}  {printf ("Un signo de subrango: %s\n",yytext);return SUBR;}
+{dr_asignacion} {printf("Una asignacion: %s\n",yytext);return ASIG;}
 {dr_deftipo}   {printf ("Un signo de definicion de tipo: %s\n",yytext);return DEFT;}
 {dr_creatipo}  {printf ("Un signo de creacion de tipo: %s\n",yytext);return CREA;}
 {dr_si_no_si}  {printf ("Un signo de si-no-si: %s\n",yytext);return SINO;}
@@ -141,7 +143,6 @@ dr_punto \.
 {dr_cierre} {printf ("Un signo de cierre de parentesis: %s\n",yytext);return CIER;}
 {identificador_booleano}   {printf("Un identificador booleano: %s\n",yytext);return IBOO;}
 {identificador}   {printf("Un identificador: %s\n",yytext);return IDEN;}
-{dr_asignacion} {printf("Una asignacion: %s\n",yytext);return ASIG;}
 {dr_composicion_secuencial}   {printf("Composicion secuencial: %s\n",yytext);return SECU;}
 {dr_punto}   {printf("Composicion secuencial: %s\n",yytext);return PUNT;}
 %%

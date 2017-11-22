@@ -4,6 +4,7 @@
 %{
 //-- Lexer prototype required by bison, aka getNextToken()
 #include <stdio.h>
+#include "ts.h"
 int yylex();
 void yyerror(const char* s);
 extern FILE* yyin;
@@ -27,7 +28,7 @@ extern FILE* yyin;
 %token   CONT
 %token   DRDE
 %token   DDEV
-%token   DDIV
+%left    DDIV
 %token   ENTR
 %token   FACC
 %token   FALG
@@ -44,9 +45,9 @@ extern FILE* yyin;
 %token   HACE
 %token   HAST
 %token   MIEN
-%token   DMOD
+%left    DMOD
 %token   DRNO
-%token   DROR
+%left    DROR
 %token   PARA
 %token   REAL
 %token   DREF
@@ -56,12 +57,12 @@ extern FILE* yyin;
 %token   TIPO
 %token   TUPL
 %token   DVAR
-%token   DAND
+%left    DAND
 %token   ENTO
 %token   COMP
-%token   SUMA
-%token   REST
-%token   PROD
+%left    SUMA
+%left    REST
+%left    PROD
 %token   ENSA
 %token   SEPA
 %token   SUBR
@@ -77,7 +78,7 @@ extern FILE* yyin;
 %token   PUNT
 %token   APER
 %token   CIER
-%token   DIVI
+%left    DIVI
 
 //-- GRAMMAR RULES ---------------------------------------
 %%
