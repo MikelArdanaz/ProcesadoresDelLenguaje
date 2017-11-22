@@ -12,4 +12,5 @@ algoritmo sumacomb;
         comb := comb * (m - i -1) div (i + 2);
         i := i+1
 fmientras;
-{Post: n =N AND suma = SUMATORIO(i=1..N)(M sobre i)} falgoritmo
+{Post: n =N AND suma = SUMATORIO(i=1..N)(M sobre i)}
+falgoritmo .

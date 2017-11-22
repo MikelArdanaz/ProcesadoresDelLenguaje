@@ -101,8 +101,7 @@ decl_a_f: accion_d decl_a_f   {printf("decl_a_f_1 \n");}
          | /*epsilon*/   {printf("decl_a_f_epsilon \n");}
          ;
 
-bloque:  declaraciones {printf("bloque_1 \n");}
-      | instrucciones {printf("bloque_2 \n");}
+bloque:  declaraciones instrucciones {printf("bloque \n");}
       ;
 
 declaraciones  : declaracion_tipo declaraciones {printf("declaraciones_1 \n");}
@@ -142,7 +141,7 @@ lista_campos      : IDEN DEFT d_tipo SECU lista_campos   {printf("lista_campos \
                   | /*epsilon*/  {printf("lista_campos_epsilon \n");}
                   ;
 
-lista_d_cte       : IDEN CREA LENT SECU lista_d_cte {printf("lista_d_cte_entera \n");} /*TODO Agrupar literales en 1 token*/
+lista_d_cte       : IDEN CREA LENT SECU lista_d_cte {printf("lista_d_cte_entera \n");}
                   | IDEN CREA LREA SECU lista_d_cte {printf("lista_d_cte_real \n");}
                   | IDEN CREA LCAR SECU lista_d_cte {printf("lista_d_cte_caracter \n");}
                   | IDEN CREA LCAD SECU lista_d_cte {printf("lista_d_cte_cadena \n");}

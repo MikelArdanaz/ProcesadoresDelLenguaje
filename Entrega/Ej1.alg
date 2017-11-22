@@ -7,6 +7,6 @@ algoritmo intercambio;
    fvar
    aux:= a;
    a:= c;
-   c:= aux;
+   c:= aux
 {Post: c=A AND a = C}
-falgoritmo
+falgoritmo .

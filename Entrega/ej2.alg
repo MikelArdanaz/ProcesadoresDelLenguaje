@@ -15,4 +15,5 @@ ent a, b, c: entero; sal max, min, med: entero; {Prec: a = A AND b = B AND c = C
         [] b <a ->med := a; min := b
         fsi
 fsi
-{Post: a=A AND b = B AND c= C ...} falgoritmo
+{Post: a=A AND b = B AND c= C ...}
+falgoritmo .
