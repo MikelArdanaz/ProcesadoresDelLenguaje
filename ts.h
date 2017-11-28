@@ -1,10 +1,26 @@
-#ifndef TS_H
-#define TS_H "definiciones.h"
+#ifndef MJ_TS_H
+#define MJ_TS_H "definiciones.h"
 
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "structs.h"
+
+//Tipos de una variable
+typedef enum {
+    V_ENTE,
+    V_REAL,
+    V_BOOLE,
+    V_CHAR,
+    V_CADENA
+} tipo_variables;
+
+const static char* tipo_variables_nombres[] = {
+    "ENTERO",
+    "REAL",
+    "BOOLEANO",
+    "CARACTER",
+    "CADENA"
+};
 
 typedef enum {
     SYM_VARIABLE,
@@ -33,38 +49,38 @@ typedef struct symbol_node {
 typedef struct {
     int size;
     symbol_node *sym_list;
-} sym_table;
+} tablaSim;
 
 symbol_node *last;
 
 /**
  * Inicializar la tabla de símbolos
  */
-void init_TS(sym_table *);
+void init_TS(tablaSim *);
 
 /**
  * Imprimir la tabla de símbolos completa
  */
-void print_TS(sym_table *);
+void print_TS(tablaSim *);
 
 /**
  * Insertar un nuevo símbolo en la tabla
  */
-int insert_TS(sym_table *, symbol, sym_tipo);
+int insert_TS(tablaSim *, symbol, sym_tipo);
 
 /**
  * Insertar una nueva varaible como símbolo de la tabla
  */
-int insert_var_TS(sym_table *, char *, variable_tipo);
+int insert_var_TS(tablaSim *, char *, tipo_variables);
 
 /**
  * Comprueba la existencia de una variable del mismo nombre
  */
-int exists_var(sym_table *, char *);
+int exists_var(tablaSim *, char *);
 
 /**
  * Obtiene la referencia a la variable del mismo nombre
  */
-symbol_node *get_var(sym_table *, char *);
+symbol_node *get_var(tablaSim *, char *);
 
 #endif
