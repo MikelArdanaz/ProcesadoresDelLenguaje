@@ -35,12 +35,10 @@ typedef struct {
 
 typedef union {
     variable var;
-    // funcion fun;
-    // tipo tip;
 } symbol;
 
 typedef struct symbol_node {
-    int id;
+    int pos;
     sym_tipo tipo;
     symbol sym;
     struct symbol_node *next;
@@ -53,34 +51,17 @@ typedef struct {
 
 symbol_node *last;
 
-/**
- * Inicializar la tabla de símbolos
- */
+//Inicializamos la tabla de símbolos
 void init_TS(tablaSim *);
-
-/**
- * Imprimir la tabla de símbolos completa
- */
+//Imprimir Tabla de Simbolos
 void print_TS(tablaSim *);
-
-/**
- * Insertar un nuevo símbolo en la tabla
- */
+//Insertar simbolo en la tabla
 int insert_TS(tablaSim *, symbol, sym_tipo);
-
-/**
- * Insertar una nueva varaible como símbolo de la tabla
- */
+//Insertar variable como simbolo de la tabla
 int insert_var_TS(tablaSim *, char *, tipo_variables);
-
-/**
- * Comprueba la existencia de una variable del mismo nombre
- */
+//Chequea si ya existe una variable con ese nombre en nuestra tabla de simbolos
 int exists_var(tablaSim *, char *);
-
-/**
- * Obtiene la referencia a la variable del mismo nombre
- */
+//Obtiene la referencia a la variable del mismo nombre
 symbol_node *get_var(tablaSim *, char *);
 
 #endif
