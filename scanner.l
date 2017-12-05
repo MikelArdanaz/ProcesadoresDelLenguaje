@@ -90,7 +90,11 @@ dr_punto \.
 {comentario}   {printf("Un comentario: %s\n",yytext);return COME;}
 {dr_accion} {printf("Una palabra reservada: %s\n",yytext);return ACCI;}
 {dr_algoritmo} {printf("Una palabra reservada: %s\n",yytext);return ALGO;}
-{dr_tipobase}  {printf("Una palabra reservada: %s\n",yytext);return BASE;}
+{dr_booleano}  {printf("Una palabra reservada: %s\n",yytext);return BOOL;}
+{dr_entero}  {printf("Una palabra reservada: %s\n",yytext);return ENTE;}
+{dr_caracter}  {printf("Una palabra reservada: %s\n",yytext);return CHAR;}
+{dr_cadena}  {printf("Una palabra reservada: %s\n",yytext);return CADE;}
+{dr_real}  {printf("Una palabra reservada: %s\n",yytext);return REAL;}
 {dr_const}  {printf("Una palabra reservada: %s\n",yytext);return CONS;}
 {dr_continuar} {printf("Una palabra reservada: %s\n",yytext);return CONT;}
 {dr_de}  {printf("Una palabra reservada: %s\n",yytext);return DRDE;}

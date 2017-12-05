@@ -11,7 +11,9 @@ typedef enum {
     V_REAL,
     V_BOOLE,
     V_CHAR,
-    V_CADENA
+    V_CADENA,
+    V_OTRO,
+    V_TEMP
 } tipo_variables;
 
 const static char* tipo_variables_nombres[] = {
@@ -19,7 +21,9 @@ const static char* tipo_variables_nombres[] = {
     "REAL",
     "BOOLEANO",
     "CARACTER",
-    "CADENA"
+    "CADENA",
+    "OTRO",
+    "TEMPORAL"
 };
 
 typedef enum {
@@ -55,6 +59,8 @@ symbol_node *last;
 void init_TS(tablaSim *);
 //Imprimir Tabla de Simbolos
 void print_TS(tablaSim *);
+//Cambia el tipo de las variables con tipo temporal por el tipo pasado como argumento
+void cambia_tipo(tablaSim *,tipo_variables);
 //Insertar simbolo en la tabla
 int insert_TS(tablaSim *, symbol, sym_tipo);
 //Insertar variable como simbolo de la tabla
