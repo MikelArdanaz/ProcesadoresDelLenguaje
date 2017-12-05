@@ -14,4 +14,4 @@ parser: parser.y
 scanner: scanner.l
 	$(LEX) scanner.l
 compilador: parser scanner
-	$(CC) compilador parser.tab.c lex.yy.c $(LFL)
+	$(CC) compilador parser.tab.c ts.c lex.yy.c $(LFL)

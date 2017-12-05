@@ -47,3 +47,14 @@ int insert_var_TS(tablaSim *Tabla, char *Nombre, tipo_variables tipo){
 int exists_var(tablaSim *Tabla, char *Nombre){
    return get_var(Tabla,Nombre)!=NULL;
 }
+//Obtiene la referencia a la variable del mismo nombre.Devuelve NULL si no existe
+symbol_node *get_var(tablaSim *Tabla, char *Nombre){
+   symbol_node *temp=Tabla->sym_list;
+   while (temp !=NULL) {
+      if (temp->tipo == SYM_VARIABLE && strcmp(temp->sym.var.nombre,Nombre)==0) {
+         return temp;
+      }
+      temp = temp->next;
+   }
+   return NULL;
+}
