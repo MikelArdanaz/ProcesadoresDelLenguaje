@@ -1,7 +1,10 @@
-%{
+%top{
 #include "parser.tab.h"
 #include "ts.h"
-%}
+}
+   #define FALSE 0
+   #define TRUE !(FALSE)
+
 /* Practica 1 Procesadores del lenguaje */
 mayuscula [A-Z]
 minuscula [a-z]
@@ -82,6 +85,7 @@ dr_fin_array   \]
 literal_booleano  {dr_verdadero}|{dr_falso}
 dr_tipobase {dr_booleano}|{dr_entero}|{dr_caracter}|{dr_cadena}|{dr_real}
 dr_punto \.
+
 %%
 {literal_entero}  {printf("Un literal entero: %s\n",yytext);return LENT;}
 {literal_real} {printf("Un literal real: %s\n",yytext);return LREA;}
@@ -145,8 +149,18 @@ dr_punto \.
 {dr_fin_array} {printf ("Un signo de fin de array: %s\n",yytext);return FINA;}
 {dr_apertura} {printf ("Un signo de apertura de parentesis: %s\n",yytext);return APER;}
 {dr_cierre} {printf ("Un signo de cierre de parentesis: %s\n",yytext);return CIER;}
-{identificador_booleano}   {printf("Un identificador booleano: %s\n",yytext);return IBOO;}
-{identificador}   {printf("Un identificador: %s\n",yytext);return IDEN;}
+{identificador_booleano}   {
+      printf("Un identificador booleano: %s\n",yytext);
+      yylval.cadena = (char *) malloc (sizeof(char) * strlen(yytext));
+      strcpy(yylval.cadena, yytext);
+      return IBOO;
+   }
+{identificador}   {
+   printf("Un identificador: %s\n",yytext);
+   yylval.cadena = (char *) malloc (sizeof(char) * strlen(yytext));
+   strcpy(yylval.cadena, yytext);
+   return IDEN;
+   }
 {dr_composicion_secuencial}   {printf("Composicion secuencial: %s\n",yytext);return SECU;}
 {dr_punto}   {printf("Composicion secuencial: %s\n",yytext);return PUNT;}
 %%

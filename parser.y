@@ -8,16 +8,17 @@
 int yylex();
 void yyerror(const char* s);
 extern FILE* yyin;
-struct tablaSim *MitablaSim;
+tablaSim MitablaSim;
 %}
 
 //-- SYMBOL SEMANTIC VALUES -----------------------------
 %union {
-   int entero;
+   long int entero;
    double real;
    char caracter;
    char *cadena;
-   long int booleano;
+   char *tipoiden;
+   int booleano;
    int tipo;
 };
 %token   LENT
@@ -74,8 +75,8 @@ struct tablaSim *MitablaSim;
 %token   SINO
 %token   INAR
 %token   FINA
-%token   IDEN
-%token   IBOO
+%token   <cadena>   IDEN
+%token   <cadena>   IBOO
 %token   ASIG
 %token   SECU
 %token   PUNT
@@ -86,14 +87,14 @@ struct tablaSim *MitablaSim;
 %token   ENTE
 %token   CHAR
 %token   CADE
-%token   REAL
 %type <tipo>   d_tipo
 %type <tipo>   lista_id
 %type <tipo>   tipo_base
 
 //-- GRAMMAR RULES ---------------------------------------
 %%
-desc_algoritmo : ALGO IDEN SECU cabecera_alg bloque_alg FALG PUNT {printf("desc_algoritmo \n");}
+desc_algoritmo : ALGO IDEN SECU cabecera_alg bloque_alg FALG PUNT {printf("desc_algoritmo \n"); printf ("Terminado. Imprimo la tabla de simbolos\n");
+print_TS(&MitablaSim);}
                ;
 
 cabecera_alg   : decl_globales decl_a_f decl_ent_sal COME {printf("cabecera_alg \n");}
@@ -134,19 +135,19 @@ lista_d_tipo      : IDEN CREA d_tipo SECU lista_d_tipo   {printf("d_lista_tipo \
                   | /*epsilon*/  {printf("d_lista_tipo_epsilon \n");}
                   ;
 
-d_tipo            : TUPL lista_campos FTUP   {printf("d_tipo_1.1 \n");$$=V_OTRO}
-                  | TABL INAR expresion_t SUBR expresion_t FINA DRDE d_tipo   {printf("d_tipo_1.2 \n");$$=V_OTRO}
-                  | IDEN   {printf("d_tipo_2.1 \n");$$=V_OTRO}
-                  | expresion_t SUBR expresion_t   {printf("d_tipo_2.2 \n");$$=V_OTRO}
-                  | DREF d_tipo  {printf("d_tipo_2.3 \n");$$=V_OTRO}
+d_tipo            : TUPL lista_campos FTUP   {printf("d_tipo_1.1 \n");$$=V_OTRO;}
+                  | TABL INAR expresion_t SUBR expresion_t FINA DRDE d_tipo   {printf("d_tipo_1.2 \n");$$=V_OTRO;}
+                  | IDEN   {printf("d_tipo_2.1 \n");$$=V_OTRO;}
+                  | expresion_t SUBR expresion_t   {printf("d_tipo_2.2 \n");$$=V_OTRO;}
+                  | DREF d_tipo  {printf("d_tipo_2.3 \n");$$=V_OTRO;}
                   | tipo_base   {printf("d_tipo_2.4 \n");}
                   ;
 
-tipo_base         :BOOL {printf("Una variable de tipo BOOLEANO");$$=V_BOOLE;};
-                  |ENTE {printf("Una variable de tipo ENTERO");$$=V_ENTE;};
-                  |CHAR {printf("Una variable de tipo CARACTER");$$=V_CHAR;};
-                  |CADE {printf("Una variable de tipo CADENA");$$=V_CADENA;};
-                  |REAL {printf("Una variable de tipo REAL");$$=V_REAL;};
+tipo_base         :BOOL {printf("Una variable de tipo BOOLEANO");$$=V_BOOLE;}
+                  |ENTE {printf("Una variable de tipo ENTERO");$$=V_ENTE;}
+                  |CHAR {printf("Una variable de tipo CARACTER");$$=V_CHAR;}
+                  |CADE {printf("Una variable de tipo CADENA");$$=V_CADENA;}
+                  |REAL {printf("Una variable de tipo REAL");$$=V_REAL;}
                   ;
 
 expresion_t       : expresion {printf("expresion_t_1 \n");}
@@ -165,16 +166,16 @@ lista_d_cte       : IDEN CREA LENT SECU lista_d_cte {printf("lista_d_cte_entera 
                   | /*epsilon*/   {printf("lista_d_cte_epsilon \n");}
                   ;
 
-lista_d_var       : lista_id DEFT IDEN SECU lista_d_var  {printf("lista_d_var_1 \n"); cambia_tipo(&symTable,$3);}
+lista_d_var       : lista_id DEFT IDEN SECU lista_d_var  {printf("lista_d_var_1 \n"); /*cambia_tipo(&MitablaSim,$3);*/}
                   | lista_id DEFT IBOO SECU lista_d_var  {printf("lista_d_var_booleano \n");}
-                  | lista_id DEFT d_tipo SECU lista_d_var {printf("lista_d_var_2 \n"); cambia_tipo(&symTable,$3);}
+                  | lista_id DEFT d_tipo SECU lista_d_var {printf("lista_d_var_2 \n"); cambia_tipo(&MitablaSim,$3);}
                   | /*epsilon*/   {printf("lista_d_var_epsilon \n");}
                   ;
 
-lista_id          : IDEN SEPA lista_id  {printf("lista_id_1 \n"); if insert_var_TS(&symTable, $1, $3) <0{printf("Variable ya definida \n");}; $$ = $3;}
-                  | IDEN   {printf("lista_id_2 \n");if insert_var_TS(&symTable, $1, V_TEMP)<0{printf("Variable ya definida \n");};}
-                  | IBOO SEPA lista_id  {printf("lista_id_3_Bool \n");if insert_var_TS(&symTable, $1, $3)<0{printf("Variable ya definida \n");}; $$ = $3;}
-                  | IBOO   {printf("lista_id_4_Bool \n");if insert_var_TS(&symTable, $1, V_BOOLE)<0{printf("Variable ya definida \n");};}
+lista_id          : IDEN SEPA lista_id  {printf("lista_id_1 \n"); if (insert_var_TS(&MitablaSim, $1, $3) <0){printf("Variable ya definida \n");} $$ = $3; printf("TablaSimbolos:\n");print_TS(&MitablaSim);}
+                  | IDEN   {printf("lista_id_2 \n"); if (insert_var_TS(&MitablaSim, $1, V_TEMP)<0){printf("Variable ya definida \n");} $$=V_TEMP; printf("TablaSimbolos:\n");print_TS(&MitablaSim);}
+                  | IBOO SEPA lista_id  {printf("lista_id_3_Bool \n");if (insert_var_TS(&MitablaSim, $1, $3)<0){printf("Variable ya definida \n");} $$ = $3;}
+                  | IBOO   {printf("lista_id_4_Bool \n");if (insert_var_TS(&MitablaSim, $1, V_BOOLE)<0){printf("Variable ya definida \n");} $$=V_BOOLE; }
                   ;
 
 decl_ent_sal      : decl_ent  {printf("decl_ent_sal_1 \n");}
@@ -294,6 +295,7 @@ l_ll              : expresion SEPA l_ll   {printf("l_ll_1 \n");}
 //-- FUNCTION DEFINITIONS ---------------------------------
 int main( int argc, char **argv ){
    ++argv, --argc;  /* skip over program name */
+   init_TS(&MitablaSim);
    if ( argc > 0 )
       yyin = fopen( argv[0], "r" );
    else
