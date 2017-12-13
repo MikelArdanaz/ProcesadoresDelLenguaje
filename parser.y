@@ -212,7 +212,8 @@ exp_a             : exp_a DDIV exp_a   {printf("exp_a_div \n");}
 exp_b             : exp_b DAND exp_b {printf("exp_b_AND \n");}
                   | exp_b DROR exp_b {printf("exp_b_OR \n");}
                   | DRNO exp_b {printf("exp_b_NO \n");}
-                  | operandob   {printf("exp_b_litBooleano \n");}
+                  | operandob   {printf("exp_b_Booleano \n");}
+                  | LBOO   {printf("exp_b_litBooleano \n");}
                   ;
 
 exp_b             : expresion COMP expresion {printf("exp_b_COMP \n");}
@@ -241,6 +242,7 @@ instruccion       : CONT   {printf("instruccion_1 \n");}
                   ;
 
 asignacion        : operando ASIG expresion  {printf("asignacion \n");}
+                  | operandob ASIG expresion  {printf("asignacion literal booleano\n");}
                   ;
 
 alternativa       : DRSI expresion ENTO instrucciones lista_opciones DFSI  {printf("alternativa \n");}

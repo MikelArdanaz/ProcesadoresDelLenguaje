@@ -1,5 +1,5 @@
 #ifndef MJ_TS_H
-#define MJ_TS_H "definiciones.h"
+#define MJ_TS_H "ts.h"
 
 #include <stdio.h>
 #include <stdlib.h>
