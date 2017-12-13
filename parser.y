@@ -22,6 +22,8 @@ tablaCuad MitablaCuad;
    char *tipoiden;
    int booleano;
    int tipo;
+   op_aritmetico op_a;
+   expresion exp;
 };
 %token   LENT
 %token   LREA
@@ -92,6 +94,9 @@ tablaCuad MitablaCuad;
 %type <tipo>   d_tipo
 %type <tipo>   lista_id
 %type <tipo>   tipo_base
+%type <exp>   expresion
+%type <op_a>  exp_a
+
 
 //-- GRAMMAR RULES ---------------------------------------
 %%
@@ -196,12 +201,47 @@ decl_ent          : ENTR lista_d_var {printf("decl_ent \n");}
 decl_sal          : DSAL lista_d_var {printf("decl_sal \n");}
                   ;
 
-expresion         : exp_a  {printf("expresion_1 \n");}
+expresion         : exp_a  {
+                     printf("expresion_1 \n");
+                     $$.tipo=EXP_ARITMETICA;
+                     $$.a.id=$1.id;
+                     $$.a.tipo=$1.tipo;
+                  }
                   | exp_b   {printf("expresion_2 \n");}
                   | funcion_ll {printf("expresion_3 \n");}
                   ;
 
-exp_a             : exp_a SUMA exp_a   {printf("exp_a_suma \n");}
+exp_a             : exp_a SUMA exp_a   {
+                     if($1.tipo==V_ENTE && $3.tipo==V_ENTE){
+                        printf("Expresion aritmetica: Suma de 2 enteros \n");
+                        int resul=insert_var_TS(&MitablaSim,"",V_ENTE);
+                        insert_QT(&MitablaCuad,OP_SUMA_ENTERO,$1.id,$3.id,resul);
+                        $$.id=resul;
+                        $$.tipo==V_ENTE;
+                     }else if($1.tipo==V_REAL && $3.tipo==V_REAL){
+                        printf("Expresion aritmetica: Suma de 2 reales \n");
+                        int resul=insert_var_TS(&MitablaSim,"",V_REAL);
+                        insert_QT(&MitablaCuad,OP_SUMA_REAL,$1.id,$3.id,resul);
+                        $$.id=resul;
+                        $$.tipo==V_REAL;
+                     }else if($1.tipo==V_ENTE && $3.tipo==V_REAL){
+                        printf("Expresion aritmetica: Suma de 1 entero (1º) y un real \n");
+                        int op1=insert_var_TS(&MitablaSim,"",V_REAL);
+                        insert_QT(&MitablaCuad,OP_ENTERO2REAL,$1.id,OP_NULL,op1);
+                        int resul=insert_var_TS(&MitablaSim,"",V_REAL);
+                        insert_QT(&MitablaCuad,OP_SUMA_REAL,op1,$3.id,resul);
+                        $$.id=resul;
+                        $$.tipo==V_REAL;
+                     }else if($1.tipo==V_REAL && $3.tipo==V_ENTE){
+                        printf("Expresion aritmetica: Suma de 1 entero (2º) y un real \n");
+                        int op2=insert_var_TS(&MitablaSim,"",V_REAL);
+                        insert_QT(&MitablaCuad,OP_ENTERO2REAL,$3.id,OP_NULL,op2);
+                        int resul=insert_var_TS(&MitablaSim,"",V_REAL);
+                        insert_QT(&MitablaCuad,OP_SUMA_REAL,$1.id,op2,resul);
+                        $$.id=resul;
+                        $$.tipo==V_REAL;
+                     }
+                  }
                   | exp_a REST exp_a   {printf("exp_a_resta \n");}
                   | exp_a PROD exp_a   {printf("exp_a_multiplicacion \n");}
                   | exp_a DIVI exp_a   {printf("exp_a_division \n");}

@@ -53,6 +53,26 @@ typedef struct {
     symbol_node *sym_list;
 } tablaSim;
 
+typedef enum {
+    EXP_ARITMETICA,
+    EXP_BOOLEANA
+} expresion_tipo;
+
+const static char* expresion_tipo_nombres[] = {
+    "ARITMETICA",
+    "BOOLEANA"
+};
+
+typedef struct {
+   int id;
+   tipo_variables tipo;
+} op_aritmetico;
+
+typedef struct {
+   expresion_tipo tipo;
+   op_aritmetico a;
+} expresion;
+
 symbol_node *last;
 
 //Inicializamos la tabla de símbolos

@@ -1,5 +1,5 @@
 #ifndef MJ_TC_H
-#define MJ_TC_H "ts.h"
+#define MJ_TC_H "tc.h"
 //Definicion de los operadores a almacenar en la tabla de cuadruplas
 typedef enum
 {
@@ -26,7 +26,8 @@ typedef enum
     OP_BOOL_MAYOR,
     OP_BOOL_MAYOR_IGUAL,
     OP_GOTO,
-    OP_CONDICIONAL_GOTO
+    OP_CONDICIONAL_GOTO,
+    OP_NULL
 } operador;
 
 const static char* operador_nombres[] = {
