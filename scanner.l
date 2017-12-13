@@ -1,6 +1,7 @@
 %top{
-#include "parser.tab.h"
 #include "ts.h"
+#include "tc.h"
+#include "parser.tab.h"
 }
    #define FALSE 0
    #define TRUE !(FALSE)
