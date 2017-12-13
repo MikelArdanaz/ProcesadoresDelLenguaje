@@ -5,10 +5,12 @@
 //-- Lexer prototype required by bison, aka getNextToken()
 #include <stdio.h>
 #include "ts.h"
+#include "tc.h"
 int yylex();
 void yyerror(const char* s);
 extern FILE* yyin;
 tablaSim MitablaSim;
+tablaCuad MitablaCuad;
 %}
 
 //-- SYMBOL SEMANTIC VALUES -----------------------------
@@ -93,9 +95,14 @@ tablaSim MitablaSim;
 
 //-- GRAMMAR RULES ---------------------------------------
 %%
-desc_algoritmo : ALGO IDEN SECU cabecera_alg bloque_alg FALG PUNT {printf("desc_algoritmo \n"); printf ("Terminado. Imprimo la tabla de simbolos\n");
-print_TS(&MitablaSim);}
-               ;
+desc_algoritmo : ALGO IDEN SECU cabecera_alg bloque_alg FALG PUNT {
+   printf("desc_algoritmo \n");
+   printf ("Terminado. Imprimo la tabla de simbolos\n");
+   print_TS(&MitablaSim);
+   printf ("Imprimo la tabla de cuadruplas\n");
+   print_QT(&MitablaCuad);
+   }
+   ;
 
 cabecera_alg   : decl_globales decl_a_f decl_ent_sal COME {printf("cabecera_alg \n");}
                ;
@@ -298,6 +305,7 @@ l_ll              : expresion SEPA l_ll   {printf("l_ll_1 \n");}
 int main( int argc, char **argv ){
    ++argv, --argc;  /* skip over program name */
    init_TS(&MitablaSim);
+   init_QT(&MitablaCuad);
    if ( argc > 0 )
       yyin = fopen( argv[0], "r" );
    else

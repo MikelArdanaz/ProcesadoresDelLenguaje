@@ -61,7 +61,7 @@ typedef struct {
    int arg1;
    int arg2;
    int resul;
-} quad
+} quad;
 typedef struct {
    int size;
    quad array[100];
