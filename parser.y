@@ -143,11 +143,11 @@ d_tipo            : TUPL lista_campos FTUP   {printf("d_tipo_1.1 \n");$$=V_OTRO;
                   | tipo_base   {printf("d_tipo_2.4 \n");}
                   ;
 
-tipo_base         :BOOL {printf("Una variable de tipo BOOLEANO");$$=V_BOOLE;}
-                  |ENTE {printf("Una variable de tipo ENTERO");$$=V_ENTE;}
-                  |CHAR {printf("Una variable de tipo CARACTER");$$=V_CHAR;}
-                  |CADE {printf("Una variable de tipo CADENA");$$=V_CADENA;}
-                  |REAL {printf("Una variable de tipo REAL");$$=V_REAL;}
+tipo_base         :BOOL {printf("Una variable de tipo BOOLEANO \n");$$=V_BOOLE;}
+                  |ENTE {printf("Una variable de tipo ENTERO \n");$$=V_ENTE;}
+                  |CHAR {printf("Una variable de tipo CARACTER \n");$$=V_CHAR;}
+                  |CADE {printf("Una variable de tipo CADENA \n");$$=V_CADENA;}
+                  |REAL {printf("Una variable de tipo REAL \n");$$=V_REAL;}
                   ;
 
 expresion_t       : expresion {printf("expresion_t_1 \n");}
@@ -172,8 +172,8 @@ lista_d_var       : lista_id DEFT IDEN SECU lista_d_var  {printf("lista_d_var_1 
                   | /*epsilon*/   {printf("lista_d_var_epsilon \n");}
                   ;
 
-lista_id          : IDEN SEPA lista_id  {printf("lista_id_1 \n"); if (insert_var_TS(&MitablaSim, $1, $3) <0){printf("Variable ya definida \n");} $$ = $3; printf("TablaSimbolos:\n");print_TS(&MitablaSim);}
-                  | IDEN   {printf("lista_id_2 \n"); if (insert_var_TS(&MitablaSim, $1, V_TEMP)<0){printf("Variable ya definida \n");} $$=V_TEMP; printf("TablaSimbolos:\n");print_TS(&MitablaSim);}
+lista_id          : IDEN SEPA lista_id  {printf("lista_id_1 \n"); if (insert_var_TS(&MitablaSim, $1, $3) <0){printf("Variable ya definida \n");} $$ = $3;}
+                  | IDEN   {printf("lista_id_2 \n"); if (insert_var_TS(&MitablaSim, $1, V_TEMP)<0){printf("Variable ya definida \n");} $$=V_TEMP;}
                   | IBOO SEPA lista_id  {printf("lista_id_3_Bool \n");if (insert_var_TS(&MitablaSim, $1, $3)<0){printf("Variable ya definida \n");} $$ = $3;}
                   | IBOO   {printf("lista_id_4_Bool \n");if (insert_var_TS(&MitablaSim, $1, V_BOOLE)<0){printf("Variable ya definida \n");} $$=V_BOOLE; }
                   ;
