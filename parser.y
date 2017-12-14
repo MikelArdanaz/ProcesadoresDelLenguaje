@@ -26,6 +26,7 @@ tablaCuad MitablaCuad;
    op_aritmetico op_a;
    op_booleano op_b;
    expresion exp;
+   int quad;
 };
 %left    DDIV DMOD DROR DAND SUMA REST PROD DIVI
 %token   LENT
@@ -94,6 +95,7 @@ tablaCuad MitablaCuad;
 %type <op_a> operando
 %type <op_b> exp_b
 %type <op_b> operandob
+%type <quad> exp_b_m
 
 //-- GRAMMAR RULES ---------------------------------------
 %%
@@ -177,7 +179,7 @@ lista_d_cte       : IDEN CREA LENT SECU lista_d_cte {printf("lista_d_cte_entera 
 
 lista_d_var       : lista_id DEFT IDEN SECU lista_d_var  {printf("lista_d_var_1 \n"); /*cambia_tipo(&MitablaSim,$3);*/}
                   | lista_id DEFT IBOO SECU lista_d_var  {printf("lista_d_var_booleano \n");}
-               | lista_id DEFT d_tipo SECU lista_d_var {printf("lista_d_var_2 \n"); cambia_tipo(&MitablaSim,$3); /*AQUI EL PROBLEMA??? ¿$1=$3;?*/}
+                  | lista_id DEFT d_tipo SECU lista_d_var {printf("lista_d_var_2 \n"); cambia_tipo(&MitablaSim,$3);}
                   | /*epsilon*/   {printf("lista_d_var_epsilon \n");}
                   ;
 
@@ -408,8 +410,13 @@ exp_a             : exp_a SUMA exp_a   {
                   }
                   ;
 
-exp_b             : exp_b DAND exp_b {printf("exp_b_AND \n");}
-                  | exp_b DROR exp_b {printf("exp_b_OR \n");}
+exp_b             : exp_b DAND exp_b_m exp_b {
+                     printf("exp_b_AND \n");
+                     backpatch(&MitablaCuad, $1.verdadero, $3);
+                     $$.falso = merge($1.falso, $4.falso);
+                     $$.verdadero = $4.verdadero;
+                  }
+                  | exp_b DROR exp_b_m exp_b {printf("exp_b_OR \n");}
                   | DRNO exp_b {printf("exp_b_NO \n");}
                   | operandob   {printf("exp_b_Booleano \n");}
                   | LBOO   {printf("exp_b_litBooleano \n");}
@@ -417,6 +424,9 @@ exp_b             : exp_b DAND exp_b {printf("exp_b_AND \n");}
                   | expresion CREA expresion {printf("exp_b_CREA \n");}
                   | APER exp_b CIER  {printf("exp_b_(exp_b) \n");}
                   ;
+
+exp_b_m           : /*epsilon*/  {$$ = MitablaCuad.size;}
+
 
 operando          : IDEN   {
                      printf("operando_1 \n");

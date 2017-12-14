@@ -1,6 +1,8 @@
 #ifndef MJ_BOOLEANOS_H
 #define MJ_BOOLEANOS_H "booleanos.h"
+
 #include "tc.h"
+#include <stdlib.h>
 
 typedef struct{
     int size;
