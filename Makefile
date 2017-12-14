@@ -14,4 +14,6 @@ parser: parser.y
 scanner: scanner.l
 	$(LEX) scanner.l
 compilador: parser scanner
+	rm -rf tabla_simbolos
+	rm -rf tabla_cuadruplas
 	$(CC) compilador parser.tab.c ts.c tc.c booleanos.c lex.yy.c $(LFL)

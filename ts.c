@@ -8,13 +8,20 @@ void init_TS(tablaSim *Tabla){
 //Imprimir Tabla de Simbolos
 void print_TS(tablaSim *Tabla){
    symbol_node *temp = Tabla->sym_list;
+   FILE *f=fopen("tabla_simbolos","a+");
+   fprintf(f, "----------------------------------------------------------\n");
    while (temp!=NULL) {
+      fprintf(f,"pos: %d\n",temp->pos);
       printf("pos: %d\n",temp->pos);
+      fprintf(f,"Tipo de la variable: %s\n",tipo_variables_nombres[temp->sym.var.tipo]);
       printf("Tipo de la variable: %s\n",tipo_variables_nombres[temp->sym.var.tipo]);
-      if (strcmp("", temp->sym.var.nombre) != 0)
+      if (strcmp("", temp->sym.var.nombre) != 0){
+         fprintf(f,"Nombre de la variable: %s\n",temp->sym.var.nombre);
          printf("Nombre de la variable: %s\n",temp->sym.var.nombre);
+      }
       temp=temp->next;
    }
+   fclose(f);
 }
 //Insertar simbolo en la tabla
 int insert_TS(tablaSim *Tabla, symbol NuevoSim, sym_tipo TipoSim){

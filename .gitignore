@@ -20,3 +20,6 @@ entrega.tar.gz
 #Grafo
 parser.dot
 parser.png
+#Ficheros con salidas de la ejecucuion
+tabla_cuadruplas
+tabla_simbolos
