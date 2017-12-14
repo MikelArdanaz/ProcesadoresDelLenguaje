@@ -3,6 +3,8 @@
 *._.DS_Store
 *~
 *._*
+#Vim Temps
+*.swp
 #Autogenerados en compilacion
 scanner.dSYM/
 lex.yy.c
@@ -15,3 +17,6 @@ parser.tab.o
 compilador
 #Entregas
 entrega.tar.gz
+#Grafo
+parser.dot
+parser.png

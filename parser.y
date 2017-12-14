@@ -25,6 +25,7 @@ tablaCuad MitablaCuad;
    op_aritmetico op_a;
    expresion exp;
 };
+%left    DDIV DMOD DROR DAND SUMA REST PROD DIVI
 %token   LENT
 %token   LREA
 %token   LCAR
@@ -36,7 +37,6 @@ tablaCuad MitablaCuad;
 %token   CONT
 %token   DRDE
 %token   DDEV
-%left    DDIV
 %token   ENTR
 %token   FACC
 %token   FALG
@@ -53,9 +53,7 @@ tablaCuad MitablaCuad;
 %token   HACE
 %token   HAST
 %token   MIEN
-%left    DMOD
 %token   DRNO
-%left    DROR
 %token   PARA
 %token   REAL
 %token   DREF
@@ -65,12 +63,8 @@ tablaCuad MitablaCuad;
 %token   TIPO
 %token   TUPL
 %token   DVAR
-%left    DAND
 %token   ENTO
 %token   COMP
-%left    SUMA
-%left    REST
-%left    PROD
 %token   ENSA
 %token   SEPA
 %token   SUBR
@@ -86,7 +80,6 @@ tablaCuad MitablaCuad;
 %token   PUNT
 %token   APER
 %token   CIER
-%left    DIVI
 %token   BOOL
 %token   ENTE
 %token   CHAR
@@ -96,6 +89,7 @@ tablaCuad MitablaCuad;
 %type <tipo>   tipo_base
 %type <exp>   expresion
 %type <op_a>  exp_a
+%type <op_a> operando
 
 
 //-- GRAMMAR RULES ---------------------------------------
@@ -152,7 +146,7 @@ d_tipo            : TUPL lista_campos FTUP   {printf("d_tipo_1.1 \n");$$=V_OTRO;
                   | IDEN   {printf("d_tipo_2.1 \n");$$=V_OTRO;}
                   | expresion_t SUBR expresion_t   {printf("d_tipo_2.2 \n");$$=V_OTRO;}
                   | DREF d_tipo  {printf("d_tipo_2.3 \n");$$=V_OTRO;}
-                  | tipo_base   {printf("d_tipo_2.4 \n");}
+                  | tipo_base   {printf("d_tipo_2.4 \n");$$=$1;}
                   ;
 
 tipo_base         :BOOL {printf("Una variable de tipo BOOLEANO \n");$$=V_BOOLE;}
@@ -180,7 +174,7 @@ lista_d_cte       : IDEN CREA LENT SECU lista_d_cte {printf("lista_d_cte_entera 
 
 lista_d_var       : lista_id DEFT IDEN SECU lista_d_var  {printf("lista_d_var_1 \n"); /*cambia_tipo(&MitablaSim,$3);*/}
                   | lista_id DEFT IBOO SECU lista_d_var  {printf("lista_d_var_booleano \n");}
-                  | lista_id DEFT d_tipo SECU lista_d_var {printf("lista_d_var_2 \n"); cambia_tipo(&MitablaSim,$3);}
+               | lista_id DEFT d_tipo SECU lista_d_var {printf("lista_d_var_2 \n"); cambia_tipo(&MitablaSim,$3); /*AQUI EL PROBLEMA??? ¿$1=$3;?*/}
                   | /*epsilon*/   {printf("lista_d_var_epsilon \n");}
                   ;
 
@@ -217,13 +211,13 @@ exp_a             : exp_a SUMA exp_a   {
                         int resul=insert_var_TS(&MitablaSim,"",V_ENTE);
                         insert_QT(&MitablaCuad,OP_SUMA_ENTERO,$1.id,$3.id,resul);
                         $$.id=resul;
-                        $$.tipo==V_ENTE;
+                        $$.tipo=V_ENTE;
                      }else if($1.tipo==V_REAL && $3.tipo==V_REAL){
                         printf("Expresion aritmetica: Suma de 2 reales \n");
                         int resul=insert_var_TS(&MitablaSim,"",V_REAL);
                         insert_QT(&MitablaCuad,OP_SUMA_REAL,$1.id,$3.id,resul);
                         $$.id=resul;
-                        $$.tipo==V_REAL;
+                        $$.tipo=V_REAL;
                      }else if($1.tipo==V_ENTE && $3.tipo==V_REAL){
                         printf("Expresion aritmetica: Suma de 1 entero (1º) y un real \n");
                         int op1=insert_var_TS(&MitablaSim,"",V_REAL);
@@ -231,7 +225,7 @@ exp_a             : exp_a SUMA exp_a   {
                         int resul=insert_var_TS(&MitablaSim,"",V_REAL);
                         insert_QT(&MitablaCuad,OP_SUMA_REAL,op1,$3.id,resul);
                         $$.id=resul;
-                        $$.tipo==V_REAL;
+                        $$.tipo=V_REAL;
                      }else if($1.tipo==V_REAL && $3.tipo==V_ENTE){
                         printf("Expresion aritmetica: Suma de 1 entero (2º) y un real \n");
                         int op2=insert_var_TS(&MitablaSim,"",V_REAL);
@@ -239,7 +233,7 @@ exp_a             : exp_a SUMA exp_a   {
                         int resul=insert_var_TS(&MitablaSim,"",V_REAL);
                         insert_QT(&MitablaCuad,OP_SUMA_REAL,$1.id,op2,resul);
                         $$.id=resul;
-                        $$.tipo==V_REAL;
+                        $$.tipo=V_REAL;
                      }
                   }
                   | exp_a REST exp_a   {printf("exp_a_resta \n");}
@@ -250,7 +244,10 @@ exp_a             : exp_a SUMA exp_a   {
 
 exp_a             : exp_a DDIV exp_a   {printf("exp_a_div \n");}
                   | APER exp_a CIER  {printf("exp_a_(exp_a) \n");}
-                  | operando   {printf("exp_a_operando \n");}
+                  | operando   {
+                     $$=$1;
+                     printf("exp_a_operando \n");
+                  }
                   | LENT   {printf("exp_a_entero \n");}
                   | LREA  {printf("exp_a_real \n");}
                   | REST exp_a {printf("exp_a_-exp_a \n");}
@@ -268,7 +265,12 @@ exp_b             : expresion COMP expresion {printf("exp_b_COMP \n");}
                   | APER exp_b CIER  {printf("exp_b_(exp_b) \n");}
                   ;
 
-operando          : IDEN   {printf("operando_1 \n");}
+operando          : IDEN   {
+                     printf("operando_1 \n");
+                     symbol_node *nodo = get_var(&MitablaSim, $1);
+                     $$.id=nodo->pos;
+                     $$.tipo=nodo->sym.var.tipo;
+                  }
                   | operando PUNT operando   {printf("operando_2 \n");}
                   | operando INAR expresion FINA {printf("operando_3 \n");}
                   | operando DREF   {printf("operando_4 \n");}
