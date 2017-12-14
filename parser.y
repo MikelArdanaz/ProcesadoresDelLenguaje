@@ -443,8 +443,23 @@ instruccion       : CONT   {printf("instruccion_1 \n");}
                   | accion_ll {printf("instruccion_5 \n");}
                   ;
 
-asignacion        : operando ASIG expresion  {printf("asignacion \n");}
-                  | operandob ASIG expresion  {printf("asignacion literal booleano\n");}
+asignacion        : operando ASIG expresion  {
+                     if($3.a.tipo==EXP_ARITMETICA && $1.tipo==$3.a.tipo){
+                        printf("asignacion aritmetica\n");
+                        insert_QT(&MitablaCuad,OP_ASIGNACION,$3.a.id,OP_NULL,$1.id);
+                     }else{
+                        printf("Los tipos no coinciden.\n");
+                     }
+                  }
+                  | operandob ASIG expresion  {
+                     if($3.a.tipo==EXP_BOOLEANA){
+                        printf("asignacion booleana\n");
+                        $1.verdadero=$3.b.verdadero;
+                        $1.falso=$3.b.falso; 
+                     }else{
+                        printf("Los tipos no coinciden.\n");
+                     }
+                  }
                   ;
 
 alternativa       : DRSI expresion ENTO instrucciones lista_opciones DFSI  {printf("alternativa \n");}
