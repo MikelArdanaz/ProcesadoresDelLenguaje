@@ -416,13 +416,30 @@ exp_b             : exp_b DAND exp_b_m exp_b {
                      $$.falso = merge($1.falso, $4.falso);
                      $$.verdadero = $4.verdadero;
                   }
-                  | exp_b DROR exp_b_m exp_b {printf("exp_b_OR \n");}
-                  | DRNO exp_b {printf("exp_b_NO \n");}
-                  | operandob   {printf("exp_b_Booleano \n");}
-                  | LBOO   {printf("exp_b_litBooleano \n");}
+                  | exp_b DROR exp_b_m exp_b {
+                     printf("exp_b_OR \n");
+                     backpatch(&MitablaCuad, $1.falso, $3);
+                     $$.verdadero = merge($1.verdadero, $4.verdadero);
+                     $$.falso = $4.falso;
+                  }
+                  | DRNO exp_b {
+                     printf("exp_b_NO \n");
+                     $$.verdadero=$2.falso;
+                     $$.falso=$2.verdadero;
+                  }
+                  | operandob   {
+                     printf("exp_b_Booleano \n");
+                     $$=$1;
+                  }
+                  | LBOO   {
+                     printf("exp_b_litBooleano \n");
+                  }
                   | expresion COMP expresion {printf("exp_b_COMP \n");}
                   | expresion CREA expresion {printf("exp_b_CREA \n");}
-                  | APER exp_b CIER  {printf("exp_b_(exp_b) \n");}
+                  | APER exp_b CIER  {
+                     printf("exp_b_(exp_b) \n");
+                     $$=$2;
+                  }
                   ;
 
 exp_b_m           : /*epsilon*/  {$$ = MitablaCuad.size;}
@@ -439,7 +456,14 @@ operando          : IDEN   {
                   | operando DREF   {printf("operando_4 \n");}
                   ;
 
-operandob         : IBOO   {printf("operando booleano \n");}
+operandob         : IBOO   {
+                     printf("operando booleano \n");
+                     symbol_node *nodo = get_var(&MitablaSim, $1);
+                     $$.verdadero = makelist(MitablaCuad.size);
+                     $$.falso = makelist(MitablaCuad.size + 1);
+                     insert_QT(&MitablaCuad, OP_CONDICIONAL_GOTO, nodo->pos, OP_NULL, OP_NULL);
+                     insert_QT(&MitablaCuad, OP_GOTO, OP_NULL, OP_NULL, OP_NULL);
+                  }
                   ;
 
 instrucciones     : instruccion SECU instrucciones {printf("instrucciones_1 \n");}
@@ -465,7 +489,7 @@ asignacion        : operando ASIG expresion  {
                      if($3.a.tipo==EXP_BOOLEANA){
                         printf("asignacion booleana\n");
                         $1.verdadero=$3.b.verdadero;
-                        $1.falso=$3.b.falso; 
+                        $1.falso=$3.b.falso;
                      }else{
                         printf("Los tipos no coinciden.\n");
                      }
