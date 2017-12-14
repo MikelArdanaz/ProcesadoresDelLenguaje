@@ -1,6 +1,7 @@
 %top{
 #include "ts.h"
 #include "tc.h"
+#include "booleanos.h"
 #include "parser.tab.h"
 }
    #define FALSE 0

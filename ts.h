@@ -1,6 +1,7 @@
 #ifndef MJ_TS_H
 #define MJ_TS_H "ts.h"
 
+#include "booleanos.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -71,6 +72,7 @@ typedef struct {
 typedef struct {
    expresion_tipo tipo;
    op_aritmetico a;
+   op_booleano b;
 } expresion;
 
 symbol_node *last;

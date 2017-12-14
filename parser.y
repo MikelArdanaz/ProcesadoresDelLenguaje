@@ -6,6 +6,7 @@
 #include <stdio.h>
 #include "ts.h"
 #include "tc.h"
+#include "booleanos.h"
 int yylex();
 void yyerror(const char* s);
 extern FILE* yyin;
@@ -23,6 +24,7 @@ tablaCuad MitablaCuad;
    int booleano;
    int tipo;
    op_aritmetico op_a;
+   op_booleano op_b;
    expresion exp;
 };
 %left    DDIV DMOD DROR DAND SUMA REST PROD DIVI
@@ -90,7 +92,8 @@ tablaCuad MitablaCuad;
 %type <exp>   expresion
 %type <op_a>  exp_a
 %type <op_a> operando
-
+%type <op_b> exp_b
+%type <op_b> operandob
 
 //-- GRAMMAR RULES ---------------------------------------
 %%
@@ -201,7 +204,12 @@ expresion         : exp_a  {
                      $$.a.id=$1.id;
                      $$.a.tipo=$1.tipo;
                   }
-                  | exp_b   {printf("expresion_2 \n");}
+                  | exp_b   {
+                     printf("expresion_2 \n");
+                     $$.tipo=EXP_BOOLEANA;
+                     $$.b.verdadero=$1.verdadero;
+                     $$.b.falso=$1.falso;
+                  }
                   | funcion_ll {printf("expresion_3 \n");}
                   ;
 
