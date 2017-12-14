@@ -234,23 +234,170 @@ exp_a             : exp_a SUMA exp_a   {
                         insert_QT(&MitablaCuad,OP_SUMA_REAL,$1.id,op2,resul);
                         $$.id=resul;
                         $$.tipo=V_REAL;
+                     }else{
+                        printf("error: al menos uno de los valores no es de tipo entero o real");
                      }
                   }
-                  | exp_a REST exp_a   {printf("exp_a_resta \n");}
-                  | exp_a PROD exp_a   {printf("exp_a_multiplicacion \n");}
-                  | exp_a DIVI exp_a   {printf("exp_a_division \n");}
-                  | exp_a DMOD exp_a   {printf("exp_a_mod \n");}
-                  ;
-
-exp_a             : exp_a DDIV exp_a   {printf("exp_a_div \n");}
-                  | APER exp_a CIER  {printf("exp_a_(exp_a) \n");}
+                  | exp_a REST exp_a   {
+                     if($1.tipo==V_ENTE && $3.tipo==V_ENTE){
+                        printf("Expresion aritmetica: Resta de 2 enteros \n");
+                        int resul=insert_var_TS(&MitablaSim,"",V_ENTE);
+                        insert_QT(&MitablaCuad,OP_RESTA_ENTERO,$1.id,$3.id,resul);
+                        $$.id=resul;
+                        $$.tipo=V_ENTE;
+                     }else if($1.tipo==V_REAL && $3.tipo==V_REAL){
+                        printf("Expresion aritmetica: Resta de 2 reales \n");
+                        int resul=insert_var_TS(&MitablaSim,"",V_REAL);
+                        insert_QT(&MitablaCuad,OP_RESTA_REAL,$1.id,$3.id,resul);
+                        $$.id=resul;
+                        $$.tipo=V_REAL;
+                     }else if($1.tipo==V_ENTE && $3.tipo==V_REAL){
+                        printf("Expresion aritmetica: Resta de 1 entero (1º) y un real \n");
+                        int op1=insert_var_TS(&MitablaSim,"",V_REAL);
+                        insert_QT(&MitablaCuad,OP_ENTERO2REAL,$1.id,OP_NULL,op1);
+                        int resul=insert_var_TS(&MitablaSim,"",V_REAL);
+                        insert_QT(&MitablaCuad,OP_RESTA_REAL,op1,$3.id,resul);
+                        $$.id=resul;
+                        $$.tipo=V_REAL;
+                     }else if($1.tipo==V_REAL && $3.tipo==V_ENTE){
+                        printf("Expresion aritmetica: Resta de 1 entero (2º) y un real \n");
+                        int op2=insert_var_TS(&MitablaSim,"",V_REAL);
+                        insert_QT(&MitablaCuad,OP_ENTERO2REAL,$3.id,OP_NULL,op2);
+                        int resul=insert_var_TS(&MitablaSim,"",V_REAL);
+                        insert_QT(&MitablaCuad,OP_RESTA_REAL,$1.id,op2,resul);
+                        $$.id=resul;
+                        $$.tipo=V_REAL;
+                     }else{
+                        printf("error: al menos uno de los valores no es de tipo entero o real");
+                     }
+                  }
+                  | exp_a PROD exp_a      {
+                     if($1.tipo==V_ENTE && $3.tipo==V_ENTE){
+                        printf("Expresion aritmetica: Multiplicacion de 2 enteros \n");
+                        int resul=insert_var_TS(&MitablaSim,"",V_ENTE);
+                        insert_QT(&MitablaCuad,OP_PRODUCTO_ENTERO,$1.id,$3.id,resul);
+                        $$.id=resul;
+                        $$.tipo=V_ENTE;
+                     }else if($1.tipo==V_REAL && $3.tipo==V_REAL){
+                        printf("Expresion aritmetica: Multiplicacion de 2 reales \n");
+                        int resul=insert_var_TS(&MitablaSim,"",V_REAL);
+                        insert_QT(&MitablaCuad,OP_PRODUCTO_REAL,$1.id,$3.id,resul);
+                        $$.id=resul;
+                        $$.tipo=V_REAL;
+                     }else if($1.tipo==V_ENTE && $3.tipo==V_REAL){
+                        printf("Expresion aritmetica: Multiplicacion de 1 entero (1º) y un real \n");
+                        int op1=insert_var_TS(&MitablaSim,"",V_REAL);
+                        insert_QT(&MitablaCuad,OP_ENTERO2REAL,$1.id,OP_NULL,op1);
+                        int resul=insert_var_TS(&MitablaSim,"",V_REAL);
+                        insert_QT(&MitablaCuad,OP_PRODUCTO_REAL,op1,$3.id,resul);
+                        $$.id=resul;
+                        $$.tipo=V_REAL;
+                     }else if($1.tipo==V_REAL && $3.tipo==V_ENTE){
+                        printf("Expresion aritmetica: Multiplicacion de 1 entero (2º) y un real \n");
+                        int op2=insert_var_TS(&MitablaSim,"",V_REAL);
+                        insert_QT(&MitablaCuad,OP_ENTERO2REAL,$3.id,OP_NULL,op2);
+                        int resul=insert_var_TS(&MitablaSim,"",V_REAL);
+                        insert_QT(&MitablaCuad,OP_PRODUCTO_REAL,$1.id,op2,resul);
+                        $$.id=resul;
+                        $$.tipo=V_REAL;
+                     }else{
+                        printf("error: al menos uno de los valores no es de tipo entero o real");
+                     }
+                  }
+                  | exp_a DIVI exp_a   {
+                     if($1.tipo==V_ENTE && $3.tipo==V_ENTE){
+                        printf("Expresion aritmetica: Division de 2 enteros \n");
+                        int op1=insert_var_TS(&MitablaSim,"",V_REAL);
+                        insert_QT(&MitablaCuad,OP_ENTERO2REAL,$1.id,OP_NULL,op1);
+                        int op2=insert_var_TS(&MitablaSim,"",V_REAL);
+                        insert_QT(&MitablaCuad,OP_ENTERO2REAL,$3.id,OP_NULL,op2);
+                        int resul=insert_var_TS(&MitablaSim,"",V_ENTE);
+                        insert_QT(&MitablaCuad,OP_DIVISION_REAL,op1,op2,resul);
+                        $$.id=resul;
+                        $$.tipo=V_REAL;
+                     }else if($1.tipo==V_REAL && $3.tipo==V_REAL){
+                        printf("Expresion aritmetica: Division de 2 reales \n");
+                        int resul=insert_var_TS(&MitablaSim,"",V_REAL);
+                        insert_QT(&MitablaCuad,OP_DIVISION_REAL,$1.id,$3.id,resul);
+                        $$.id=resul;
+                        $$.tipo=V_REAL;
+                     }else if($1.tipo==V_ENTE && $3.tipo==V_REAL){
+                        printf("Expresion aritmetica: Division de 1 entero (1º) y un real \n");
+                        int op1=insert_var_TS(&MitablaSim,"",V_REAL);
+                        insert_QT(&MitablaCuad,OP_ENTERO2REAL,$1.id,OP_NULL,op1);
+                        int resul=insert_var_TS(&MitablaSim,"",V_REAL);
+                        insert_QT(&MitablaCuad,OP_DIVISION_REAL,op1,$3.id,resul);
+                        $$.id=resul;
+                        $$.tipo=V_REAL;
+                     }else if($1.tipo==V_REAL && $3.tipo==V_ENTE){
+                        printf("Expresion aritmetica: Division de 1 entero (2º) y un real \n");
+                        int op2=insert_var_TS(&MitablaSim,"",V_REAL);
+                        insert_QT(&MitablaCuad,OP_ENTERO2REAL,$3.id,OP_NULL,op2);
+                        int resul=insert_var_TS(&MitablaSim,"",V_REAL);
+                        insert_QT(&MitablaCuad,OP_DIVISION_REAL,$1.id,op2,resul);
+                        $$.id=resul;
+                        $$.tipo=V_REAL;
+                     }else{
+                        printf("error: al menos uno de los valores no es de tipo entero o real");
+                     }
+                  }
+                  | exp_a DMOD exp_a   {
+                     if($1.tipo==V_ENTE && $3.tipo==V_ENTE){
+                        printf("Expresion aritmetica: Modulo de 2 enteros \n");
+                        int resul=insert_var_TS(&MitablaSim,"",V_ENTE);
+                        insert_QT(&MitablaCuad,OP_MODULO,$1.id,$3.id,resul);
+                        $$.id=resul;
+                        $$.tipo=V_ENTE;
+                     }else{
+                        printf("error: al menos uno de los valores no es de tipo entero\n");
+                     }
+                  }
+                  | exp_a DDIV exp_a   {
+                     if($1.tipo==V_ENTE && $3.tipo==V_ENTE){
+                        printf("Expresion aritmetica: Cociente entero de 2 enteros \n");
+                        int resul=insert_var_TS(&MitablaSim,"",V_ENTE);
+                        insert_QT(&MitablaCuad,OP_DIVISION_ENTERO,$1.id,$3.id,resul);
+                        $$.id=resul;
+                        $$.tipo=V_ENTE;
+                     }else{
+                        printf("error: al menos uno de los valores no es de tipo entero\n");
+                     }
+                  }
+                  | APER exp_a CIER  {
+                    $$=$2;
+                    printf("exp_a_(exp_a) \n");
+                  }
                   | operando   {
                      $$=$1;
                      printf("exp_a_operando \n");
                   }
-                  | LENT   {printf("exp_a_entero \n");}
-                  | LREA  {printf("exp_a_real \n");}
-                  | REST exp_a {printf("exp_a_-exp_a \n");}
+                  | LENT   {
+                     $$.id = insert_var_TS(&MitablaSim,"",V_ENTE);
+                     $$.tipo=V_ENTE;
+                     printf("exp_a_entero \n");
+                  }
+                  | LREA  {
+                     $$.id = insert_var_TS(&MitablaSim,"",V_REAL);
+                     $$.tipo=V_REAL;
+                     printf("exp_a_real \n");
+                  }
+                  | REST exp_a {
+                     if($2.tipo==V_ENTE){
+                        printf("Expresion aritmetica: Cambio de signo entero\n");
+                        int resul=insert_var_TS(&MitablaSim,"",V_ENTE);
+                        insert_QT(&MitablaCuad, OP_MENOS_ENTERO,$2.id,OP_NULL, resul);
+                        $$.id=resul;
+                        $$.tipo=V_ENTE;
+                     }else if($2.tipo==V_REAL){
+                        printf("Expresion aritmetica: Cambio de signo real\n");
+                        int resul=insert_var_TS(&MitablaSim,"",V_REAL);
+                        insert_QT(&MitablaCuad, OP_MENOS_REAL,$2.id,OP_NULL, resul);
+                        $$.id=resul;
+                        $$.tipo=V_REAL;
+                     }else{
+                        printf("error: el valor no es de tipo entero o real\n");
+                     }
+                  }
                   ;
 
 exp_b             : exp_b DAND exp_b {printf("exp_b_AND \n");}
@@ -258,9 +405,7 @@ exp_b             : exp_b DAND exp_b {printf("exp_b_AND \n");}
                   | DRNO exp_b {printf("exp_b_NO \n");}
                   | operandob   {printf("exp_b_Booleano \n");}
                   | LBOO   {printf("exp_b_litBooleano \n");}
-                  ;
-
-exp_b             : expresion COMP expresion {printf("exp_b_COMP \n");}
+                  | expresion COMP expresion {printf("exp_b_COMP \n");}
                   | expresion CREA expresion {printf("exp_b_CREA \n");}
                   | APER exp_b CIER  {printf("exp_b_(exp_b) \n");}
                   ;
