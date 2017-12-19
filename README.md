@@ -13,7 +13,7 @@ Se dispone de un `Makefile` a partir del cual podemos construir el compilador de
 $ make
 $ ./compilador ejemplo
 ```
-Los ejemplos se encuentran en la carpeta Ejemplos que contiene `ej1.alg ej2.alg ej3.alg ej4.alg ejemplobool.alg`  
+Los ejemplos se encuentran en la carpeta `Ejemplos` que contiene `ej1.alg ej2.alg ej3.alg ej4.alg ejemplobool.alg`  
 Una vez ejecutado, se mostrará por pantalla una lista de todos los tokens y definiciones regulares detectados. Se mostrarán también las tablas de símbolos y cuádruplas al final de la ejecución, que seran guardadas en los archivos `tabla_simbolos` y `tabla_cuadruplas` respectivamente. En el archivo `parser.output` se guardará información referente a las operaciones de desplazamiento y reducción realizadas.
 
 ## Logros
