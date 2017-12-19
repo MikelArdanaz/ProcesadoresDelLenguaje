@@ -154,11 +154,11 @@ d_tipo            : TUPL lista_campos FTUP   {printf("d_tipo_1.1 \n");$$=V_OTRO;
                   | tipo_base   {printf("d_tipo_2.4 \n");$$=$1;}
                   ;
 
-tipo_base         :BOOL {printf("Una variable de tipo BOOLEANO \n");$$=V_BOOLE;}
-                  |ENTE {printf("Una variable de tipo ENTERO \n");$$=V_ENTE;}
-                  |CHAR {printf("Una variable de tipo CARACTER \n");$$=V_CHAR;}
-                  |CADE {printf("Una variable de tipo CADENA \n");$$=V_CADENA;}
-                  |REAL {printf("Una variable de tipo REAL \n");$$=V_REAL;}
+tipo_base         :BOOL {printf("Al menos una variable de tipo BOOLEANO \n");$$=V_BOOLE;}
+                  |ENTE {printf("Al menos una variable de tipo ENTERO \n");$$=V_ENTE;}
+                  |CHAR {printf("Al menos una variable de tipo CARACTER \n");$$=V_CHAR;}
+                  |CADE {printf("Al menos una variable de tipo CADENA \n");$$=V_CADENA;}
+                  |REAL {printf("Al menos una variable de tipo REAL \n");$$=V_REAL;}
                   ;
 
 expresion_t       : expresion {printf("expresion_t_1 \n");}
@@ -478,7 +478,7 @@ instruccion       : CONT   {printf("instruccion_1 \n");}
                   ;
 
 asignacion        : operando ASIG expresion  {
-                     if($3.a.tipo==EXP_ARITMETICA && $1.tipo==$3.a.tipo){
+                     if($3.tipo==EXP_ARITMETICA && $1.tipo==$3.a.tipo){
                         printf("asignacion aritmetica\n");
                         insert_QT(&MitablaCuad,OP_ASIGNACION,$3.a.id,OP_NULL,$1.id);
                      }else{
@@ -486,11 +486,12 @@ asignacion        : operando ASIG expresion  {
                      }
                   }
                   | operandob ASIG expresion  {
-                     if($3.a.tipo==EXP_BOOLEANA){
+                     if($3.tipo==EXP_BOOLEANA){
                         printf("asignacion booleana\n");
                         $1.verdadero=$3.b.verdadero;
                         $1.falso=$3.b.falso;
                      }else{
+                        printf("%d",$3.tipo);
                         printf("Los tipos no coinciden.\n");
                      }
                   }
