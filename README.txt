@@ -21,7 +21,9 @@ Se dispone de un Makefile a partir del cual podemos construir el compilador desa
 utilizados durante el desarrollo de esta práctica, abrimos un terminal en la raíz del proyecto y ejecutamos:
 
 $ make
-$ ./compilador ejemplo.alg
+$ ./compilador ejemplo
+
+Los ejemplos se encuentran en la carpeta Ejemplos que contiene `ej1.alg ej2.alg ej3.alg ej4.alg ejemplobool.alg`
 
 Una vez ejecutado, se mostrará por pantalla una lista de todos los tokens y definiciones regulares detectados.
 Se mostrarán también las tablas de símbolos y cuádruplas al final de la ejecución, que seran guardadas en los
