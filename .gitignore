@@ -17,6 +17,7 @@ parser.tab.o
 compilador
 #Entregas
 entrega.tar.gz
+Entrega_Final.tar.gz
 #Grafo
 parser.dot
 parser.png
