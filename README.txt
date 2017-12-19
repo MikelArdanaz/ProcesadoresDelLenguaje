@@ -62,9 +62,14 @@ Parser:
  Otras utilidades y comentarios:
 
  - Modelo Fortran: se ha realizado una peque�a variaci�n en la gramática especificada, debido a la necesidad de diferenciar las
-                   expresiones aritm�ticas de las booleanas en el parser, de forma que las variables booleanas deben empezar por b o B.
+                   expresiones aritm�ticas de las booleanas en el parser, de forma que las variables booleanas deben empezar
+                   por b o B.
 
- - Booleanos: Se ha realizado otra modificación en la gramática para llevar a cabo las expresiones booleanas debido a la necesidad de conocer en el _AND_ y en el _OR_ donde empieza el código de destino de saltos. Para ello hemos añadido la traducción `exp_b_m` en la que almacenamos la posición de la tabla de cuadruplas en la que se almacenara el valor de la expresión.
+ - Booleanos: Se ha realizado otra modificación en la gramática para llevar a cabo las expresiones booleanas debido a la
+              necesidad de conocer en el _AND_ y en el _OR_ donde empieza el código de destino de saltos. Para ello hemos
+              añadido la traducción `exp_b_m` en la que almacenamos la posición de la tabla de cuadruplas en la que se
+              almacenara el valor de la expresión.
+              
  - Tabla de cuadruplas: Hemos definido un operando nulo con el valor 24.
 
  Porcentaje de trabajo imputable
